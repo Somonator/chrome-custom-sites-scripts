@@ -1,0 +1,340 @@
+body {
+    background: #fafafa;
+    font-size: 14px;
+    line-height: 1.42857143;
+    margin: 0;
+}
+
+*,*::before,*::after {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+a {
+    color: #000000;
+    text-decoration: none;
+}
+p {
+    margin: 0 0 10px 0;
+}
+img {
+    max-width: 100%;
+    display: block;
+}
+
+table {
+    border: 1px solid #ccd0d4;
+    border-spacing: 0;    
+    box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+    width: 100%;
+}
+table th {
+    border-bottom: 1px solid #ccd0d4;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4em;
+    text-align: left;
+    padding: 8px 10px;
+}
+table td {
+    font-size: 13px;
+    line-height: 1.5em;
+    padding: 8px 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    font-size: 14px;
+    color: #555;
+    line-height: 1.42857143; 
+    width: 100%;
+    height: 34px;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    outline: 0;    
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+
+textarea {
+    min-height: 250px;
+    overflow-x: hidden;
+    resize: vertical;
+}
+
+/* ютубовский чекбокс */
+input[type="checkbox"] {
+    background-color: #cccccc;
+    outline: none;
+    border-radius: 8px; 
+    width: 36px;
+    height: 14px;
+    position: relative;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+input[type="checkbox"]::after {
+    content: '';
+    background: #909090;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    transition: 0.3s;
+}
+input[type="checkbox"]:checked::after {
+    background:#2c3e50;
+    left: 20px;
+}
+
+select {
+    background-color: #ffffff;
+    background-image: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;    
+    background-position: right 5px top 55%;
+    min-width: 70px;
+    width: auto;
+    padding-right: 25px;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* кнопки */
+.btn {
+    background:#2c3e50;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 16px;
+    margin: 0;
+    display: table;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+.btn.btn-second {
+    font-size: 12px;
+    text-transform: none;
+    padding: 5px 10px;
+}
+
+/* флекс элементы */
+.f-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.f-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.f-right {
+    display: flex;
+    justify-content: flex-end;  
+}
+
+/* главная обертка */
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.site-wrap {
+    background: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);    
+}
+.page-wrap {
+    gap: 40px;
+}
+.page-wrap .left,
+.page-wrap .right {
+    min-width: 0;
+    flex: 1;
+}
+
+/* основные блоки */
+.header,
+.content,
+.footer {
+    width: 100%;
+    padding: 20px;  
+}
+
+.header,
+.content {
+    border-bottom: 1px dashed #dedede;
+}
+
+.header {
+    margin-top: 50px;
+}
+.footer {
+    margin-bottom: 50px;
+}
+
+/* заголовки */
+.title {
+    font-size: 25px;
+    font-weight: 600;    
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+.sub-title {
+    font-size: 21px;
+    margin: 0 0 20px 0;
+}
+.caption {
+    font-size: 12px;
+}
+
+/* контент */
+.content hr {
+    border: none;
+    border-bottom: 1px dashed #dedede;
+    width: calc(100% + 40px);
+    margin: 20px -20px;
+}
+.content .CodeMirror-lines {
+    padding: 4px 0;
+}
+.content .f-right {
+    gap: 10px;
+}
+
+/* поля формы */
+.field-wrap {
+    display: block;
+    margin-bottom: 20px;
+}
+.field-wrap label {
+    font-weight: 600;    
+    display: block;
+    margin: 0 0 10px 0;
+}
+.field-wrap label a {
+    text-decoration: underline;
+}
+
+.field-wrap .repeater-field {
+    position: relative;
+    margin-bottom: 10px;
+}
+.field-wrap .repeater-field .delete {
+    background: #ffffff;
+    border: 1px solid black;
+    border-radius: 50%;
+    line-height: 1px;
+    text-decoration: none;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: -7.5px;
+    transform: translateY(-50%);
+}
+.field-wrap .repeater-field .delete::before {
+    content: '';
+    background: #000000;    
+    width: 7px;
+    height: 1px;
+    display: block;
+}
+.field-wrap .repeater-field .delete:hover {
+    background: #f44336 !important;
+    border-color: #f44336 !important;
+}
+.field-wrap .repeater-field .delete:hover::before {
+    background: #ffffff !important; 
+}
+
+/* таблица скриптов */
+.list-scripts .manage {
+    text-align: right;
+    user-select: none;
+}
+.list-scripts .manage a,
+.list-scripts .manage span {
+    font-size: 20px;
+	color: #444444;
+	margin: 2px;
+	cursor: pointer;
+}
+
+/* подвал */
+.footer {
+    text-align: center;
+}
+.footer a {
+    text-decoration: underline;
+}
+
+/* блоки уведомлений */
+.alert {
+    background-color: #000000;
+    color: #ffffff;
+    max-width: 350px;    
+    padding: 20px;
+    position: fixed;
+    right: 20px;
+    bottom: -100%;
+    transition: all 0.2s;
+}
+.alert.success {
+    background-color: #4CAF50;    
+}
+.alert.error {
+    background-color: #f44336; 
+}
+.alert.warning {
+    background-color: #ff9800;
+}
+.alert.info {
+    background-color: #2196F3;
+}
+.alert .text {
+    white-space: pre-line;
+}
+.alert .close {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;    
+    line-height: 20px; 
+    float: right;       
+    margin-left: 15px;
+    transition: 0.3s;
+    cursor: pointer;    
+}
+.alert .close:hover {
+    color: #000000;
+}

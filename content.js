@@ -1,0 +1,1 @@
+chrome.runtime.sendMessage({cmd: 'check_url_by_patterns'});

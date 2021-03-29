@@ -1,0 +1,37 @@
+html {
+    min-width: 350px;
+}
+body {
+    font-size: 16px;
+    margin: 0;
+}
+a {
+    color: #000000;
+}
+
+.list p {
+    border-bottom: 2px solid #000000;    
+    text-align: center;
+    padding: 20px 5px 20px 5px;
+    margin: 0;
+}
+.list .item {
+    border-bottom: 2px solid #000000;      
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.list .item .title {
+    word-break: break-word;
+    min-width: 0;
+    flex-basis: 80%;
+    position: relative;
+}
+
+.to-options {
+    padding: 20px 5px 20px 5px;
+    margin: 0 auto;
+    display: table;
+}

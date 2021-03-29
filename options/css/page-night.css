@@ -1,0 +1,20 @@
+body.nigth-mode {
+    background: #222226;
+    color: #eeeeee;
+}
+body.nigth-mode input[type="text"],
+body.nigth-mode input[type="email"],
+body.nigth-mode input[type="password"],
+body.nigth-mode textarea,
+body.nigth-mode select {
+    background-color: #444446;
+    color: #eeeeee;
+}
+body.nigth-mode .site-wrap {
+    background: #333336;
+}
+body.nigth-mode .list-scripts .manage a,
+body.nigth-mode .list-scripts .manage span,
+body.nigth-mode a {
+    color: #eeeeee;
+}
