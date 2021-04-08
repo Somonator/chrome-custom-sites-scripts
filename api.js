@@ -16,7 +16,7 @@ async function get_all_scripts() {
 
 async function get_scripts_with_patterns() {
     let scripts = await get_all_scripts()
-        scripts_with_patterns = scripts.filter(item => item.match_patterns !== undefined && !!item.is_disabled === false);
+        scripts_with_patterns = scripts.filter(item => item.match_patterns.length && !!item.is_disabled === false);
 
     return scripts_with_patterns;
 }
