@@ -11,11 +11,11 @@ body {
 }
 h1,h2,h3,h4,h5,h6 {
     font-weight: 600;
-    margin-bottom: 10px;
+    margin: 0 0 15px 0;
 }
 a {
     color: #000000;
-    text-decoration: none;
+    text-decoration: underline;
 }
 p {
     margin: 0 0 10px 0;
@@ -23,6 +23,12 @@ p {
 img {
     max-width: 100%;
     display: block;
+}
+hr {
+    border: none;
+    border-bottom: 1px dashed #dedede;
+    width: calc(100% + 40px);
+    margin: 20px -20px;
 }
 
 table {
@@ -148,6 +154,13 @@ select {
     padding: 5px 10px;
 }
 
+/* контейнер */
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
 /* флекс элементы */
 .f-center {
     display: flex;
@@ -163,47 +176,72 @@ select {
     justify-content: flex-end;  
 }
 
-/* главная обертка */
-.container {
+/* оформление */
+.page-section {
     width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
+    padding: 20px;
 }
-
-.site-wrap {
-    background: #ffffff;
-    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);    
-}
-.page-wrap {
-    gap: 40px;
-}
-.page-wrap .left,
-.page-wrap .right {
-    min-width: 0;
-    flex: 1;
-}
-
-/* основные блоки */
-.header,
-.content,
-.footer {
-    width: 100%;
-    padding: 20px;  
-}
-
-.header,
-.content {
+.s-style {
     border-bottom: 1px dashed #dedede;
 }
 
-.header {
+/* главная обертка */
+.site-wrap {
+    background: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);
     margin-top: 50px;
-}
-.footer {
     margin-bottom: 50px;
 }
+.site-wrap .f-right {
+    gap: 10px;
+}
 
-/* заголовки */
+/* Шапка */
+.header {
+    justify-content: space-between;
+    align-items: center;
+}
+.header .memory-state p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.header .memory-state progress {
+    border: 0;
+    width: 100%;
+    height: 20px;
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.header .memory-state progress::-webkit-progress-bar {
+    background: #D3D3D3;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.header .memory-state progress::-webkit-progress-value {
+    background: #2c3e50;
+    transition : width 0.5s linear;
+}
+.header .memory-state progress::before,
+.header .memory-state progress::after {
+    font-weight: 300;
+    font-size: 12px;
+    color: #ffffff;
+    mix-blend-mode: exclusion;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.header .memory-state progress::before {
+    content: attr(value) ' KB';
+    left: 5px;
+}
+.header .memory-state progress::after {
+    content: attr(max) ' KB';
+    right: 5px;
+}
+
+/* заголовки и подписи */
 .title {
     font-size: 25px;
     font-weight: 600;    
@@ -218,18 +256,15 @@ select {
     font-size: 12px;
 }
 
-/* контент */
-.content hr {
-    border: none;
-    border-bottom: 1px dashed #dedede;
-    width: calc(100% + 40px);
-    margin: 20px -20px;
+/* обертка двух колонок */
+.page-wrap {
+    gap: 40px;
+    padding: 20px; 
 }
-.content .CodeMirror-lines {
-    padding: 4px 0;
-}
-.content .f-right {
-    gap: 10px;
+.page-wrap .left,
+.page-wrap .right {
+    min-width: 0;
+    flex: 1;
 }
 
 /* поля формы */
@@ -244,6 +279,13 @@ select {
 }
 .field-wrap label a {
     text-decoration: underline;
+}
+.field-wrap .CodeMirror {
+    min-height: 50px;
+    resize: vertical;
+}
+.field-wrap .CodeMirror-lines {
+    padding: 4px 0;
 }
 
 .field-wrap .repeater-field {
@@ -279,6 +321,9 @@ select {
 }
 
 /* таблица скриптов */
+.list-scripts tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 .list-scripts .manage {
     text-align: right;
     user-select: none;
@@ -295,8 +340,41 @@ select {
 .footer {
     text-align: center;
 }
-.footer a {
-    text-decoration: underline;
+
+/* табы */
+.tabs .tabs-header {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+.tabs .tabs-header .tab-btn {
+    background: #D3D3D3;
+    border-radius: 5px;
+    color: #000000;
+    padding: 0.5rem 0.75rem;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.tabs .tabs-header .tab-btn.active {
+    background: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 50%);
+    cursor: default;
+}
+.tabs .tabs-header .tab-btn.disabled {
+    background: #D3D3D3 !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.tabs .tabs-header .tab-btn:not(.active):focus,
+.tabs .tabs-header .tab-btn:not(.active):hover {
+    background-color: #efefef;
+}
+.tabs .tabs-content .tab-content {
+    display: none;
+}
+.tabs .tabs-content .tab-content.active {
+    display: block;
 }
 
 /* блоки уведомлений */
@@ -304,7 +382,7 @@ select {
     background-color: #000000;
     color: #ffffff;
     max-width: 350px;    
-    padding: 20px;
+    padding: 20px 35px 20px 20px;
     position: fixed;
     right: 20px;
     bottom: -100%;
@@ -328,10 +406,11 @@ select {
 .alert .close {
     font-size: 22px;
     font-weight: bold;
-    color: white;    
-    line-height: 20px; 
-    float: right;       
-    margin-left: 15px;
+    color: #ffffff;    
+    line-height: 22px; 
+    position: absolute;
+    top: 17px;
+    right: 12px;
     transition: 0.3s;
     cursor: pointer;    
 }

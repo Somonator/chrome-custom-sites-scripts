@@ -15,74 +15,138 @@
 </head>
 <body>
     <div class="container site-wrap">
-        <div class="header">
+        <div class="f-row header page-section s-style">
             <h1 class="title">Управление кастомными скриптами</h1>
+
+            <div id="memory-use" class="memory-state">
+                <p>Использование памяти</p>
+                <progress max="100" value="1"></progress>
+            </div>
         </div>
 
-        <div class="f-row page-wrap content">
+        <div class="f-row page-wrap page-section s-style">
             <div class="left">
-                <form id="add_script" class="options" autocomplete="off">
+                <form id="add_script" autocomplete="off" novalidate>
                     <input type="hidden" name="id">
 
                     <h2 class="sub-title">Добавить скрипт <span></span></h2>
 
-                    <div class="field-wrap">
-                        <label>Название</label>
-                        <input type="text" name="name" required>
-                    </div>
-
-                    
-                    <div class="field-wrap">
-                        <label>Временно отключить паттерн</label>
-                        <input type="checkbox" name="is_disabled" value="true">
-                    </div>
-                    
-                    <div class="field-wrap">
-                        <label>Шаблоны соответствия URL <a href="#" class="to-all-urls">[Все сайты]</a></label>
-
-                        <div class="repeater-field">
-                            <input type="text" name="match_patterns[]">
-                            <a href="#" title="Удалить ряд" class="delete f-center" style="display: none;" required></a>                            
+                    <div class="tabs">
+                        <div class="tabs-header">
+                            <div class="tab-btn active">Общее</div>
+                            <div class="tab-btn">CSS</div>
+                            <div class="tab-btn">JS</div>
                         </div>
+                        <div class="tabs-content">
+                            <div class="tab-content active">
+                                <div class="field-wrap">
+                                    <label>Название</label>
+                                    <input type="text" name="name" required>
+                                </div>
+                                
+                                <div class="field-wrap">
+                                    <label>Временно отключить паттерн</label>
+                                    <input type="checkbox" name="is_disabled" value="true">
+                                </div>
+                                
+                                <div class="field-wrap">
+                                    <label>Шаблоны соответствия URL <a href="#" class="to-all-urls">[Все сайты]</a></label>
 
-                        <div class="f-right">
-                            <a href="#" class="btn btn-second add-repeater-field">Добавить</a>
+                                    <div class="repeater-field">
+                                        <input type="text" name="match_patterns[]">
+                                        <a href="#" title="Удалить поле" class="delete f-center" style="display: none;"></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field">Добавить</a>
+                                    </div>
+                                </div>                                
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="field-wrap">
+                                    <label>URL'ы удаленных файлов</label>
+
+                                    <div class="repeater-field">
+                                        <input type="text" name="css_remote_files[]">
+                                        <a href="#" title="Удалить поле" class="delete f-center" style="display: none;"></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field">Добавить</a>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label>Код CSS</label>
+                                    <textarea id="css_code" name="css_code"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="field-wrap">
+                                    <label>Запускать при</label>
+                                    <select name="js_run_at">
+                                        <option value="document_start">Старте документа</option>
+                                        <option value="document_idle">Промежуточное значение</option>
+                                        <option value="document_end">Загрузке документа</option>
+                                    </select>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label>URL'ы удаленных файлов</label>
+
+                                    <div class="repeater-field">
+                                        <input type="text" name="js_remote_files[]">
+                                        <a href="#" title="Удалить поле" class="delete f-center" style="display: none;"></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field">Добавить</a>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label>Код JS</label>
+                                    <textarea id="js_code" name="js_code"></textarea>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>Код CSS</label>
-                        <textarea id="css_code" name="css_code"></textarea>
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>Код JS</label>
-                        <textarea id="js_code" name="js_code"></textarea>
                     </div>
 
                     <div class="f-right">
-                        <input type="button" class="btn reset-form" value="Вернутся к добавлению" style="display: none;">
+                        <input type="button" class="btn reset-form" value="Сбросить" style="display: none;">
                         <input type="submit" class="btn" value="Сохранить">
-                    </div>
-                </form>            
+                    </div>                        
+                </form>              
             </div>
 
             <div class="right">
-                <h2 class="sub-title">Все скрипты</h2>
+                <h2 class="sub-title">Мои скрипты</h2>
 
                 <table class="list-scripts">
                     <thead>
                         <tr>
-                            <th>Заголовки скриптов</th>
+                            <th>Заголовок</th>
                             <th></th>
                         </tr>                    
                     </thead>
                     <tbody></tbody>
-                </table>
+                </table>                    
             </div>
         </div>
 
-        <form id="json-form" class="content" style="display: none;">
+        <div class="help page-section s-style">
+            <h2 class="sub-title">Справка</h2>
+
+            <p>При удалении расширения, память очищается и все скрипты удалятся</p>
+            <p>Максимальный обьем хранилища около 5 мегабайт, ограничение на расширение</p>
+            <p>Промежуточное значение (document_idle) - грубо говоря, время загрузки подбирается само</p>
+            <p>Скрипты загружаются последовательно: сначала поряд по URL, а потом код</p>
+            <p><a href="https://developer.chrome.com/docs/extensions/mv2/match_patterns/" target="_blank">Документация по паттернам URL</a></p>                    
+        </div>
+
+        <form id="json-form" class="import-form page-section s-style" style="display: none;">
             <h2 class="sub-title">Импорт / Экспорт</h2>
 
             <div class="field-wrap">
@@ -94,12 +158,9 @@
                 <input type="button" name="export" class="btn" value="Экспорт">
                 <input type="submit" name="import" class="btn" value="Импорт">                
             </div>
-        </form>
+        </form>        
 
-        <div class="footer">
-            <p>При удалении расширения, память очищается и все скрипты удалятся</p>
-            <a href="https://developer.chrome.com/docs/extensions/mv2/match_patterns/" target="_blank">Документация по паттернам URL</a>
-            <br>
+        <div class="footer page-section">
             <a id="to-json" href="#" class="to-json">Импорт / Экспорт</a>
         </div>        
     </div>
@@ -126,6 +187,7 @@
 
     <script src="../api.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/libs.js"></script>
     <script src="js/page.js"></script>
 </body>
 </html>

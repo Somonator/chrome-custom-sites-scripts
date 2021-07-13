@@ -13,6 +13,9 @@ body.nigth-mode select {
 body.nigth-mode .site-wrap {
     background: #333336;
 }
+body.nigth-mode .list-scripts tbody tr:nth-child(even) {
+    background-color: #444446;
+}
 body.nigth-mode .list-scripts .manage a,
 body.nigth-mode .list-scripts .manage span,
 body.nigth-mode a {

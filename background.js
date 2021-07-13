@@ -17,10 +17,23 @@ function check_url_by_patterns(cur_tab_id) {
             chrome.tabs.query({
                 url: script.match_patterns
             }, function(tabs) {
-                let index = tabs.findIndex(item => item.id == cur_tab_id);
+                if (chrome.runtime.lastError) {
+                    if (typeof chrome.runtime.lastError === 'string' && chrome.runtime.lastError.includes('user may be dragging a tab')) {
+                        setTimeout(() => check_url_by_patterns(cur_tab_id), 200);
+                        chrome.runtime.lastError = undefined;
+                        return;
+                    }
+                }
 
-                if (index >= 0) {
-                    insert_script(script, tabs[index].id);
+
+                if (tabs) {
+                    let index = tabs.findIndex(item => item.id == cur_tab_id);
+
+                    if (index >= 0) {
+                        if (tabs[index].url.includes('.xml')) return;
+
+                        insert_script(script, tabs[index].id);
+                    }
                 }
             });                 
         });

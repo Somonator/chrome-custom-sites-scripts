@@ -7,16 +7,46 @@ let $add_form = $('#add_script'),
 
 set_night_mode();
 
+$('.tabs').on('click', '.tab-btn:not(.active)', function() {
+    $(this)
+        .addClass('active').siblings().removeClass('active')
+        .closest('.tabs').find('.tab-content').removeClass('active').eq($(this).index()).addClass('active');
+
+    if ($(cm_css.getWrapperElement()).is(':visible')) {
+        cm_css.refresh();
+    }
+
+    if ($(cm_js.getWrapperElement()).is(':visible')) {
+        cm_js.refresh();
+    }
+});
+
 $add_form.submit(function(event) {
     event.preventDefault();
 
-    let form_data = $(this).serializeObject();
+    let form_data = $(this).serializeObject(),
+        not_valid = $(this).find(':invalid');
 
-    if (!cm_css.getValue() && !cm_js.getValue()) {
-        show_alert({
-            type: 'error',
-            notice: 'Код не может быть пустым'
-        });
+    
+    if (not_valid.length || !cm_css.getValue() && !cm_js.getValue()) {
+        if (not_valid.length) {
+            not_valid.each(function() {
+                let field_label = $(this).parents('.field-wrap').find('label').text(),
+                    validation_error = this.validationMessage || 'Invalid value.';;
+
+                show_alert({
+                    type: 'error',
+                    notice: 'Ошибка в поле "' + field_label + '":\n' + validation_error
+                });
+            });            
+        }
+
+        if (!cm_css.getValue() && !cm_js.getValue()) {
+            show_alert({
+                type: 'error',
+                notice: 'Код не может быть пустым'
+            });
+        }        
         return;
     }
 
@@ -25,16 +55,21 @@ $add_form.submit(function(event) {
             let tr = $scripts_list.find('tr[data-id="' + script_obj.id + '"]');
 
             tr.find('td').eq(0).html(script_obj.name);
+
+            update_memory_state_block();
         });
     } else {
         save_script(form_data).then(function(script_obj) {
             let item_html = get_script_markup(script_obj);
             
-            $scripts_list.prepend(item_html);   
+            $scripts_list.prepend(item_html);
+            
+            update_memory_state_block();
         });
     }
     
     $(this).trigger('reset');
+    $add_form.find('.tabs .tab-btn').eq(0).click();
 
     show_alert({
         type: 'success',
@@ -109,18 +144,8 @@ $scripts_list.delegate('.edit', 'click', function(event) {
     $add_form.trigger('reset');
 
     get_script_by_id(id).then(function(script) {
-        $.each(script, function(index, element) {
-            if (Array.isArray(element)) {
-                element.forEach(function(element, i) {
-                    if (i != 0) $add_form.find('[name="' + index + '[]"]').parents('.field-wrap').find('.add-repeater-field').click();
-
-                    $add_form.find('[name="' + index + '[]"]').eq(i).prop('checked', element);
-                    $add_form.find('[name="' + index + '[]"]').eq(i).val(element); 
-                });
-            } else {
-                $add_form.find('[name="' + index + '"]').prop('checked', element);
-                $add_form.find('[name="' + index + '"]').val(element);             
-            }
+        $add_form.setFormFieldsData(script, function(name, value, i) {
+            if (i != 0) $add_form.find('[name="' + name + '[]"]').parents('.field-wrap').find('.add-repeater-field').click();
         });
 
         cm_css.setValue(script.css_code ? script.css_code : '');
@@ -128,6 +153,7 @@ $scripts_list.delegate('.edit', 'click', function(event) {
 
         $add_form.find('.sub-title span').html('(' + script.id + ')');
         $add_form.find('.reset-form').show();
+        $add_form.find('.tabs .tab-btn').eq(0).click();
 
         window.scrollTo({
             top: 0,
@@ -144,6 +170,8 @@ $scripts_list.delegate('.delete', 'click', function(event) {
 
     remove_script_by_id(id).then(function(id) {
         tr.remove();
+
+        update_memory_state_block();
 
         show_alert({
             type: 'info',
@@ -189,15 +217,28 @@ $json_form.find('[name="import"]').click(function(event) {
 
     let json = $json_form.find('[name="json"]').val();
 
-    import_script_json(json).then(function() {
+    import_script_json(json).then(function(scripts) {
+        if (!scripts.length) {
+            return;
+        }
+
+        scripts.forEach(function(item) {
+            let item_html = get_script_markup(item);
+
+            $scripts_list.prepend(item_html);
+        });
+
+        update_memory_state_block();
+
+        show_alert({
+            type: 'success',
+            notice: 'Импорт из JSON произошел успешно'
+        });
+        
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-
-        setTimeout(function() {
-            location.reload();
-        }, 900);
     });
 });
 
@@ -206,7 +247,6 @@ $json_form.find('[name="import"]').click(function(event) {
 $(document).ready(function() {
     cm_css = init_codemirror('#css_code', 'css');
     cm_js = init_codemirror('#js_code', 'javascript');
-
 
     get_all_scripts().then(function(scripts) {
         if (!scripts.length) {
@@ -219,22 +259,11 @@ $(document).ready(function() {
             $scripts_list.prepend(item_html);
         });
     });
+
+    update_memory_state_block();
 });
 
 
-
-function get_serialize_object(form) {
-    let serialize_array = $(form).serializeArray(),
-        formData = {};
-    
-    $.each(serialize_array, function(i, field){
-        if (field.value.trim() !== '') {
-            formData[field.name] = field.value;
-        }
-    });
-    
-    return formData;
-}
 
 function init_codemirror(selector, mode) {
     let textarea = document.querySelector(selector),
@@ -264,11 +293,10 @@ function init_codemirror(selector, mode) {
                 "Ctrl-F": "findPersistent",
                 "Cmd-F": "findPersistent"
             }
-        }),
-        is_disable_blur = false;
+        });
     
     codemirror.isDirty = false;
-    codemirror.setSize('100%', 150);
+    codemirror.setSize('100%', 300);
 
     codemirror.on('change', function(editor) {
         editor.isDirty = true;
@@ -280,20 +308,6 @@ function init_codemirror(selector, mode) {
             CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
         }
     });
-
-    codemirror.on('focus', function (cm, event) {
-        cm.setSize('100%', 500);
-    });
-    
-    codemirror.on('blur', function (cm, event) {
-        if (is_disable_blur) return;
-
-        cm.setSize('100%', 150);
-    });
-
-    document.addEventListener('mousedown', function(event) {
-        is_disable_blur = !!event.target.closest('.CodeMirror');
-    });    
 
     return codemirror;
 }
@@ -311,6 +325,17 @@ function get_script_markup(script_obj) {
     </td>`);
 
     return item;
+}
+
+function update_memory_state_block() {
+    get_memory_state().then(function(state) {
+        let block = $('#memory-use');
+
+        block.find('progress').attr({
+            value: state.use,
+            max: state.of
+        });
+    });
 }
 
 function set_night_mode() {
@@ -347,8 +372,8 @@ function show_alert({type = 'info', notice = 'Уведомление'} = {}) {
         timer_hide;
     
     alert.addClass(type);
-    alert.append('<span class="text">' + notice + '</span>');
-    alert.append('<span class="close">&times;</span>');
+    alert.append('<div class="text">' + notice + '</div>');
+    alert.append('<div class="close">&times;</div>');
     alert.find('.close').click(hide);    
     $('body').append(alert);
 
@@ -358,69 +383,3 @@ function show_alert({type = 'info', notice = 'Уведомление'} = {}) {
         hide();
     }, 10 * 1000);
 }
-
-
-
-$.fn.serializeObject = function() {
-    var data = {};
-
-    function buildInputObject(arr, val) {
-        if (arr.length < 1) {
-            return val;  
-        }
-        var objkey = arr[0];
-        if (objkey.slice(-1) == "]") {
-            objkey = objkey.slice(0,-1);
-        }  
-        var result = {};
-        if (arr.length == 1){
-            result[objkey] = val;
-        } else {
-            arr.shift();
-            var nestedVal = buildInputObject(arr,val);
-            result[objkey] = nestedVal;
-        }
-        return result;
-    }
-
-    function gatherMultipleValues( that ) {
-        var final_array = [];
-        $.each(that.serializeArray(), function( key, field ) {
-            // Copy normal fields to final array without changes
-            if( field.name.indexOf('[]') < 0 ){
-                final_array.push( field );
-                return true; // That's it, jump to next iteration
-            }
-
-            // Remove "[]" from the field name
-            var field_name = field.name.split('[]')[0];
-
-            // Add the field value in its array of values
-            var has_value = false;
-            $.each( final_array, function( final_key, final_field ){
-                if( final_field.name === field_name ) {
-                    has_value = true;
-                    final_array[ final_key ][ 'value' ].push( field.value );
-                }
-            });
-            // If it doesn't exist yet, create the field's array of values
-            if( ! has_value ) {
-                final_array.push( { 'name': field_name, 'value': [ field.value ] } );
-            }
-        });
-        return final_array;
-    }
-
-    // Manage fields allowing multiple values first (they contain "[]" in their name)
-    var final_array = gatherMultipleValues( this );
-
-    // Then, create the object
-    $.each(final_array, function() {
-        var val = this.value;
-        var c = this.name.split('[');
-        var a = buildInputObject(c, val);
-        $.extend(true, data, a);
-    });
-
-    return data;
-};
