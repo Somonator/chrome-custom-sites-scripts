@@ -17,12 +17,10 @@ function check_url_by_patterns(cur_tab_id) {
             chrome.tabs.query({
                 url: script.match_patterns
             }, function(tabs) {
-                if (chrome.runtime.lastError) {
-                    if (typeof chrome.runtime.lastError === 'string' && chrome.runtime.lastError.includes('user may be dragging a tab')) {
-                        setTimeout(() => check_url_by_patterns(cur_tab_id), 200);
-                        chrome.runtime.lastError = undefined;
-                        return;
-                    }
+                if (chrome.runtime.lastError && chrome.runtime.lastError.message.includes('user may be dragging a tab')) {
+                    setTimeout(() => check_url_by_patterns(cur_tab_id), 200);
+                    chrome.runtime.lastError = undefined;
+                    return;
                 }
 
 

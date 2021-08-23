@@ -21,3 +21,7 @@ body.nigth-mode .list-scripts .manage span,
 body.nigth-mode a {
     color: #eeeeee;
 }
+body.nigth-mode .list-scripts .manage [data-lang]::after {
+    background-color: #ffffff;
+    color: #000000;
+}

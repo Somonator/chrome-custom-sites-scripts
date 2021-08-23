@@ -335,11 +335,32 @@ select {
 	margin: 2px;
 	cursor: pointer;
 }
+.list-scripts .manage [data-lang] {
+    position: relative;
+}
+.list-scripts .manage [data-lang]::after {
+    content: attr(data-lang);
+    background-color: #444444;
+    width: auto;
+    height: 12px;    
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 0.9;
+    text-align: center;
+    display: block;
+    padding: 0 2px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
 
 /* подвал */
 .footer {
     text-align: center;
 }
+
 
 /* табы */
 .tabs .tabs-header {
