@@ -9,14 +9,31 @@ a {
     color: #000000;
 }
 
+.to-options {
+    background: #fafafa;
+    box-shadow: 0px 1px 5px 0px rgb(0 0 0 / 50%);
+    width: 100%;
+    text-align: center;
+    padding: 20px 5px 20px 5px;
+    margin: 0 auto;
+    display: table;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.list {
+    position: relative;
+}
 .list p {
-    border-bottom: 2px solid #000000;    
+    border-top: 2px solid #000000;    
     text-align: center;
     padding: 20px 5px 20px 5px;
     margin: 0;
 }
 .list .item {
-    border-bottom: 2px solid #000000;      
+    border-top: 2px solid #000000;      
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -28,10 +45,4 @@ a {
     min-width: 0;
     flex-basis: 80%;
     position: relative;
-}
-
-.to-options {
-    padding: 20px 5px 20px 5px;
-    margin: 0 auto;
-    display: table;
 }

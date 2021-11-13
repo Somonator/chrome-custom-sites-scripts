@@ -32,10 +32,23 @@ async function get_all_scripts() {
     });
 }
 
+async function get_all_scripts_with_sticky_sort() {
+    let scripts = await get_all_scripts()
+        sort_by_sticky = scripts.sort(function(a, b) {
+            if (a.is_sticky || b.is_sticky) {
+                return a.is_sticky ? 1 : -1;
+            }
+            
+            return 0;
+        });
+
+    return sort_by_sticky;
+}
+
 async function get_scripts_with_patterns() {
     let scripts = await get_all_scripts()
         scripts_with_patterns = scripts.filter(
-            item => Array.isArray(item.match_patterns) && item.match_patterns.length && item.is_disabled === undefined
+            item => Array.isArray(item.match_patterns) && item.match_patterns.length && item.is_patterns_disable === undefined
         );
 
     return scripts_with_patterns;
@@ -66,13 +79,15 @@ function get_random_id() {
 function create_script_obj(form_data, id = get_random_id()) {
     let script = Object.assign({ // default
         name: 'default',
-        is_disabled: false,
+        is_sticky: false,
+        is_patterns_disable: false,
         match_patterns: [],
         css_run_at: 'document_start',
         css_remote_files: [],
         css_code: '',
         js_run_at: 'document_start',
         js_remote_files: [],
+        is_insert_jq: false,
         js_code: 'alert("default")'
     }, form_data);
 
@@ -86,7 +101,8 @@ function create_script_obj(form_data, id = get_random_id()) {
             if (!script[i].length) {
                 delete script[i];
             }
-        } else if (i === 'is_disabled') {
+        } else if (i === 'is_patterns_disable' || i === 'is_sticky') {
+            // filters all values checkboxes (except true)
             if (script[i] !== undefined && script[i] !== false) {
                 script[i] = !!script[i];
             } else {
@@ -94,6 +110,13 @@ function create_script_obj(form_data, id = get_random_id()) {
             }
         } else if (script[i] === '') {
             delete script[i];
+        }
+    }
+
+    // convert srings to boolean
+    for (let i in script) {
+        if (script[i] === 'true' || script[i] === 'false') {
+            script[i] = Boolean(script[i]);
         }
     }
 
@@ -165,24 +188,28 @@ async function insert_script_by_id(id) {
 async function export_script_json() {
     let scripts = await get_all_scripts();
 
-    return JSON.stringify(scripts, null, 0);
+    return JSON.stringify(scripts, null, 0).replace(/\\n/g, '').replace(/\\r/g, '').replace(/\\t/g, '').replace(/ +(?= )/g,'');
 }
 
 async function import_script_json(json) {
-    let scripts = await get_all_scripts(),
-        import_scripts = JSON.parse(json);
+    try {
+        let scripts = await get_all_scripts(),
+            import_scripts = JSON.parse(json);
 
-    if (Array.isArray(import_scripts) && import_scripts.length) {
-        import_scripts.forEach(function(script, i) {
-            script = import_scripts[i] = create_script_obj(script);
+        if (Array.isArray(import_scripts) && import_scripts.length) {
+            import_scripts.forEach(function(script, i) {
+                script = import_scripts[i] = create_script_obj(script);
 
-            scripts.push(script);
-        });
+                scripts.push(script);
+            });
 
-        save_all_scripts(scripts);
+            save_all_scripts(scripts);
 
-        return import_scripts;
+            return import_scripts;
+        } else {
+            return [];
+        }     
+    } catch(e) {
+        return null;
     }
-
-    return [];
 }

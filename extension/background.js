@@ -27,11 +27,7 @@ function check_url_by_patterns(cur_tab_id) {
                 if (tabs) {
                     let index = tabs.findIndex(item => item.id == cur_tab_id);
 
-                    if (index >= 0) {
-                        if (tabs[index].url.includes('.xml')) return;
-
-                        insert_script(script, tabs[index].id);
-                    }
+                    if (index >= 0) insert_script(script, tabs[index].id);
                 }
             });                 
         });

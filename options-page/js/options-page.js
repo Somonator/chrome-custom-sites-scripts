@@ -1,5 +1,5 @@
 let $add_form = $('#add_script'),
-    $json_form = $('#json-form'),
+    $import_form = $('#json-form'),
     $scripts_list = $('.list-scripts tbody'),
     cm_css, cm_js;
 
@@ -32,26 +32,24 @@ $add_form.submit(function(event) {
     let form_data = $(this).serializeObject(),
         not_valid = $(this).find(':invalid');
 
-    
-    if (not_valid.length || !cm_css.getValue() && !cm_js.getValue()) {
-        if (not_valid.length) {
-            not_valid.each(function() {
-                let field_label = $(this).parents('.field-wrap').find('label').text(),
-                    validation_error = this.validationMessage || 'Invalid value.';;
+    if (not_valid.length) {
+        not_valid.each(function() {
+            let field_label = $(this).parents('.field-wrap').find('label').text(),
+                validation_error = this.validationMessage || 'Invalid value.';;
 
-                show_alert({
-                    type: 'error',
-                    message: 'Ошибка в поле "' + field_label + '":\n' + validation_error
-                });
-            });            
-        }
-
-        if (!cm_css.getValue() && !cm_js.getValue()) {
             show_alert({
                 type: 'error',
-                message: 'Код не может быть пустым'
+                message: get_locale_message('__MSG_options_alert_fielderror__') + ' "' + field_label + '":\n' + validation_error
             });
-        }        
+        });
+        return;        
+    }
+
+    if (!cm_css.getValue() && !cm_js.getValue()) {
+        show_alert({
+            type: 'error',
+            message: get_locale_message('__MSG_options_alert_codeempty__')
+        });
         return;
     }
 
@@ -71,20 +69,21 @@ $add_form.submit(function(event) {
             
             update_memory_state_block();
         });
+
+        $(this).trigger('reset');
+        $add_form.find('.tabs .tab-btn').eq(0).click();
     }
-    
-    $(this).trigger('reset');
-    $add_form.find('.tabs .tab-btn').eq(0).click();
 
     show_alert({
         type: 'success',
-        message: form_data.id ? 'Скрипт обновлен' : 'Скрипт добавлен'
+        message: form_data.id ? get_locale_message('__MSG_options_alert_scriptupdated__') : get_locale_message('__MSG_options_alert_scriptadded__')
     });
 });
 
 $add_form.on('reset', function(event) {
     $(this).find('.sub-title span').html('');
     $(this).find('[name="id"]').removeAttr('value');
+    $(this).find('.tabs .tab-btn').eq(0).click();
     $(this).find('.field-wrap').each(function() {
         $(this).find('.repeater-field').not(':eq(-1)').remove();
         $(this).find('.repeater-field').find('.delete').hide();
@@ -105,8 +104,8 @@ $add_form.find('.add-repeater-field').click(function(event) {
     let field = $(this).parents('.field-wrap'),
         repeater_fields = field.find('.repeater-field'),
         repeater_last = repeater_fields.last().clone();
-
-    repeater_last.find('input').val('');
+    
+    repeater_last.find('input').removeAttr('id').val('');
     repeater_last.find('.delete').show();
 
     $(this).parent().before(repeater_last);
@@ -129,8 +128,24 @@ $add_form.delegate('.repeater-field .delete', 'click', function(event) {
 $add_form.find('.to-all-urls').click(function(event) {
     event.preventDefault();
 
-    $(this).parents('.field-wrap').find('input').eq(0).focus();
-    document.execCommand('insertText', false, '<all_urls>'); // enable ctrl + z
+    let pattern = '<all_urls>';
+
+    $(this).parents('.field-wrap').find('input').last().val('').focus();
+    document.execCommand('insertText', false, pattern); // enable ctrl + z
+});
+
+$add_form.find('.to-some-url').click(function(event) {
+    event.preventDefault();
+
+    let site_url = prompt('Введите адрес сайта', ''),
+        pattern = site_url.replace('https', '').replace('http', '').replace(/\/$/, '');
+
+    if (pattern !== '') {
+        pattern = '*' + pattern + '/*';
+        
+        $(this).parents('.field-wrap').find('input').last().val('').focus();
+        document.execCommand('insertText', false, pattern); // enable ctrl + z
+    }
 });
 
 $add_form.find('.reset-form').click(function(event) {
@@ -145,15 +160,17 @@ $scripts_list.delegate('.edit', 'click', function(event) {
     event.preventDefault();
 
     let tab_button = $(this).attr('data-lang'),
+        tab_index = tab_button ? $('#tab_button_' + tab_button).index() : 0,
         id = $(this).parents('tr').attr('data-id'),
-        form_id = $add_form.find('[name="id"]').val();
-
+        id_in_form = $add_form.find('[name="id"]').val();
     
-    $add_form.find('.tabs .tab-btn').eq(0).click();
-    if (tab_button) $('#tab_button_' + tab_button).click();
-    if (form_id && id == form_id) return;
-    
-    $add_form.trigger('reset');
+    if (id_in_form && id == id_in_form) {
+        $add_form.find('.tabs .tab-btn').eq(tab_index).click();
+        return;
+    } else {
+        $add_form.trigger('reset');
+        $add_form.find('.tabs .tab-btn').eq(tab_index).click();
+    }
 
     get_script_by_id(id).then(function(script) {
         $add_form.setFormFieldsData(script, function(name, value, i) {
@@ -161,7 +178,10 @@ $scripts_list.delegate('.edit', 'click', function(event) {
         });
 
         cm_css.setValue(script.css_code ? script.css_code : '');
+        cm_css.clearHistory();
+        
         cm_js.setValue(script.js_code ? script.js_code : '');
+        cm_js.clearHistory();
 
         $add_form.find('.sub-title span').html('(' + script.id + ')');
         $add_form.find('.reset-form').show();
@@ -187,7 +207,7 @@ $scripts_list.delegate('.delete', 'click', function(event) {
 
             show_alert({
                 type: 'info',
-                message: 'Скрипт удален'
+                message: get_locale_message('__MSG_options_alert_scriptremoved__')
             });        
         });
     }
@@ -198,7 +218,7 @@ $scripts_list.delegate('.delete', 'click', function(event) {
 $('#to-json').click(function(event) {
     event.preventDefault();
 
-    $json_form.slideToggle(400, function() {
+    $import_form.slideToggle(400, function() {
         if ($(this).is(':visible')) {
             window.scrollTo({
                 top: $(this).offset().top,
@@ -208,30 +228,46 @@ $('#to-json').click(function(event) {
     });
 });
 
-$json_form.find('[name="export"]').click(function(event) {
+$import_form.find('[name="export"]').click(function(event) {
     event.preventDefault();
 
     let form = $(this).parents('form');
 
     export_script_json().then(function(json) {
         form.find('[name="json"]').val(json);
-
-        navigator.clipboard.writeText(json); // copy to clipboard
-
-        show_alert({
-            type: 'info',
-            message: 'JSON скопирован в буфер обмена'
-        });
+        form.find('.submit_buttons').addClass('space-between');
+        form.find('[name="download"]').show();
     });
 });
 
-$json_form.find('[name="import"]').click(function(event) {
+$import_form.find('[name="download"]').click(function(event) {
     event.preventDefault();
 
-    let json = $json_form.find('[name="json"]').val();
+    let form = $(this).parents('form'),
+        export_json = form.find('[name="json"]').val();
+
+    download(export_json, 'sitescript_export.json', 'application/json');
+});
+
+$import_form.find('[name="import"]').click(function(event) {
+    event.preventDefault();
+
+    let json = $import_form.find('[name="json"]').val();
 
     import_script_json(json).then(function(scripts) {
+        if (!scripts) {
+            show_alert({
+                type: 'error',
+                message: get_locale_message('__MSG_options_alert_invalidjson__')
+            });
+            return;
+        }
+
         if (!scripts.length) {
+            show_alert({
+                type: 'warning',
+                message: get_locale_message('__MSG_options_alert_scriptsnotfound__')
+            });
             return;
         }
 
@@ -245,7 +281,7 @@ $json_form.find('[name="import"]').click(function(event) {
 
         show_alert({
             type: 'success',
-            message: 'Импорт из JSON произошел успешно'
+            message: get_locale_message('__MSG_options_alert_importsuccess__')
         });
         
         window.scrollTo({
@@ -269,6 +305,14 @@ $(document).ready(function() {
     cm_css = init_codemirror('#css_code', 'css');
     cm_js = init_codemirror('#js_code', 'javascript');
 
+    $('.field-wrap').each(function() {
+        let rand_id = 'field_' + get_random_integer(921, 99999999);
+
+        $(this).find('> label').attr('for', rand_id);
+        $(this).find('> :input').attr('id', rand_id);
+        $(this).find('> .repeater-field :input:eq(0)').attr('id', rand_id);
+    });
+
     get_all_scripts().then(function(scripts) {
         if (!scripts.length) {
             return;
@@ -282,14 +326,21 @@ $(document).ready(function() {
     });
 
     update_memory_state_block();
+    i18n_init();
 });
 
 
 
+function get_random_integer(min, max) {
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+
+    return Math.round(rand);
+}
+
 function init_codemirror(selector, mode) {
     let textarea = document.querySelector(selector),
         codemirror = CodeMirror.fromTextArea(textarea, {
-            theme: 'monokai',
+            theme: 'one-dark',
             mode: mode,
             inputStyle: 'contenteditable',
             direction: 'ltr',
@@ -317,7 +368,7 @@ function init_codemirror(selector, mode) {
         });
     
     codemirror.isDirty = false;
-    codemirror.setSize('100%', 300);
+    codemirror.setSize('100%', 500);
 
     codemirror.on('change', function(editor) {
         editor.isDirty = true;
@@ -330,6 +381,8 @@ function init_codemirror(selector, mode) {
         }
     });
 
+    emmetCodeMirror(codemirror);
+
     return codemirror;
 }
 
@@ -337,13 +390,13 @@ function get_script_markup(script_obj) {
     let item = $('<tr></tr>');
 
     item.attr('data-id', script_obj.id);
-    item.append('<td>' + script_obj.name + '</td>');
+    item.append(`<td>` + script_obj.name + `</td>`);
     item.append(`<td>
         <div class="manage">
-            <span class="edit" title="Изменить данные">✎</span>        
-            <span data-lang="css" class="edit" title="Изменить CSS">✎</span>
-            <span data-lang="js" class="edit" title="Изменить JS">✎</span>
-            <span class="delete" title="Удалить">✖</span>
+            <span class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_dataedit_btn_title__') + `"></span>        
+            <span data-lang="css" class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_cssedit_btn_title__') + `"></span>
+            <span data-lang="js" class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_jsedit_btn_title__') + `"></span>
+            <span class="delete icon-delete" title="` + get_locale_message('__MSG_options_scriptslist_scriptremove_btn_title__') + `"></span>
         </div>
     </td>`);
 
@@ -364,13 +417,13 @@ function update_memory_state_block() {
 function set_night_mode() {
     let hours = new Date().getHours();
 
-    /* между 8 и 18 часами */
+    /* between 8 and 18 hourses */
     if ((hours >= 0 && hours <= 8) || (hours >= 18 && hours <= 23)) {
         $('body').addClass('nigth-mode');
     }
 }
 
-function show_alert({type = 'info', message = 'Уведомление'} = {}) {
+function show_alert({type = 'info', message = get_locale_message('__MSG_options_alert_defaultmessage__')} = {}) {
     let alert = $('<div class="alert"></div>'),
         hide = function() {
             alert.fadeOut(300, function() {

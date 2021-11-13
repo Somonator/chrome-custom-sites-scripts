@@ -1,28 +1,38 @@
 {
-	"name": "Кастомные скрипты",	
-	"description": "Вставка кастомных скриптов в сайты",
-	"version": "0.1",	
+	"name": "__MSG_extension_name__",	
+	"description": "__MSG_extension_description__",
+	"author": "Somonator",
+	"version": "0.3",
+	"default_locale": "en",
 	"manifest_version": 2,
+	"minimum_chrome_version": "55.0",
+	"icons": {
+        "16": "icon.png",
+        "128": "icon.png"
+    },
 
 	"permissions": [
 		"tabs",		
 		"storage",
-		"unlimitedStorage",
 
 		"<all_urls>"
 	],
 
 	"content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com; object-src 'self'",	
 
-	"options_page": "options/page.html",
+	"options_page": "options-page/options-page.html",
 	"browser_action": {
-        "default_popup": "options/popup.html"
+		"default_icon": {
+            "19": "icon.png",
+            "38": "icon.png"
+        },
+        "default_popup": "popup/popup.html"
 	},
 
 	"background": {
         "scripts": [
-			"api.js",
-            "background.js"
+			"extension/api.js",
+            "extension/background.js"
         ],
         "persistent": true
     },
@@ -33,8 +43,8 @@
             "<all_urls>"
         ],
         "js": [
-			"inject.js",
-			"content.js"
+			"extension/inject-scripts.js",
+			"extension/content.js"
         ]
     }]
 }

@@ -1,0 +1,179 @@
+{
+    "extension_name": {
+        "message": "Sites custom scripts"
+    },
+    "extension_description": {
+        "message": "Inject custom css and js codes in sites"
+    },
+    "options_head_title": {
+        "message": "Custom scripts"
+    },
+    "options_page_title": {
+        "message": "Manage custom scripts"
+    },
+    "options_memory_title": {
+        "message": "Memory usuage"
+    },
+    "options_addform_title": {
+        "message": "Add scripts"
+    },
+    "options_addform_tabcommon": {
+        "message": "Common"
+    },
+    "options_addform_tabcss": {
+        "message": "CSS"
+    },
+    "options_addform_tabjs": {
+        "message": "JS"
+    },
+    "options_addform_field_name_label": {
+        "message": "Name"
+    },
+    "options_addform_field_sticky_label": {
+        "message": "Sticky in popup list"
+    },
+    "options_addform_field_patterns_label": {
+        "message": "URL's patterns"
+    },
+    "options_addform_patterns_allsites_btn": {
+        "message": "[All sites]"
+    },
+    "options_addform_pattern_singleurl_btn": {
+        "message": "[Single url]"
+    },
+    "options_addform_field_patternsdisable_label": {
+        "message": "Disable patterns temporarily"
+    },
+    "options_addform_field_cssremotefiles_label": {
+        "message": "URLs remove files"
+    },
+    "options_addform_field_csscode_label": {
+        "message": "CSS code"
+    },
+    "options_addform_field_jsstartat_label": {
+        "message": "Run at"
+    },
+    "options_addform_field_jsstartat_start": {
+        "message": "On document start"
+    },
+    "options_addform_field_jsstartat_idle": {
+        "message": "Intermediate value"
+    },
+    "options_addform_field_jsstartat_end": {
+        "message": "On document load"
+    },
+    "options_addform_field_jsremotefiles_label": {
+        "message": "URL's remove files"
+    },
+    "options_addform_field_insertjq_label": {
+        "message": "Embed jQuery"
+    },
+    "options_addform_field_jscode_label": {
+        "message": "JS code"
+    },
+    "options_addform_repeater_add": {
+        "message": "Add"
+    }, 
+    "options_addform_repeater_remove": {
+        "message": "Remove field"
+    }, 
+    "options_addform_reset": {
+        "message": "Reset"
+    },
+    "options_addform_submit": {
+        "message": "Save"
+    },
+    "options_scriptslist_title": {
+        "message": "My scripts"
+    },
+    "options_scriptslist_name_column": {
+        "message": "Titles"
+    },
+    "options_scriptslist_dataedit_btn_title": {
+        "message": "Edit data"
+    },
+    "options_scriptslist_cssedit_btn_title": {
+        "message": "Edit CSS"
+    },
+    "options_scriptslist_jsedit_btn_title": {
+        "message": "Edit JS"
+    },
+    "options_scriptslist_scriptremove_btn_title": {
+        "message": "Remove"
+    },
+    "options_reference_title": {
+        "message": "Reference"
+    },
+    "options_reference_documentidle": {
+        "message": "Intermediate value (document_idle) - the load time is selected by the extension"
+    },
+    "options_reference_workexplanation": {
+        "message": "The scripts are loaded sequentially: first in the row by the URL, and then by code"
+    },
+    "options_reference_sometimesnotworking": {
+        "message": "For some reason the pattern didn't work, restarting the extension will help"
+    },    
+    "options_reference_removewarning": {
+        "message": "When you remove an extension, the memory is cleared and all scripts are deleted"
+    },
+    "options_reference_memorylimit": {
+        "message": "The maximum storage capacity is about 5 megabytes, expansion limitation"
+    },
+    "options_reference_patternsdocumentation": {
+        "message": "URL Patterns Documentation"
+    },
+    "options_importform_title": {
+        "message": "Import / Export"
+    },
+    "options_importform_field_json_title": {
+        "message": "JSON"
+    },
+    "options_importform_export_btn": {
+        "message": "Export"
+    },
+    "options_importform_download_btn": {
+        "message": "Download file"
+    },
+    "options_importform_submit": {
+        "message": "Import"
+    },
+    "options_importformshow_btn": {
+        "message": "Import / Export"
+    },
+    "options_alert_defaultmessage": {
+        "message": "Notice"
+    },
+    "options_alert_fielderror": {
+        "message": "Error in field"
+    },
+    "options_alert_codeempty": {
+        "message": "Code cannot be empty"
+    },
+    "options_alert_scriptadded": {
+        "message": "Script is added"
+    },
+    "options_alert_scriptupdated": {
+        "message": "Script upadted"
+    },
+    "options_alert_scriptremoved": {
+        "message": "Script removed"
+    },
+    "options_alert_scriptsnotfound": {
+        "message": "Scripts not found"
+    },    
+    "options_alert_invalidjson": {
+        "message": "Invalid JSON"
+    },
+    "options_alert_importsuccess": {
+        "message": "Import from JSON was successful"
+    },
+    "popup_tooptions_btn": {
+        "message": "To options"
+    },
+    "popup_scriptsnotfound": {
+        "message": "Scripts not found"
+    },
+    "popup_embed_btn": {
+        "message": "Inject"
+    }
+}

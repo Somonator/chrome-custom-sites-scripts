@@ -15,9 +15,14 @@ $('.to-options').click(function(event) {
 });
 
 $(document).ready(function() {
-    get_all_scripts().then(function(scripts) {
+    let to_opt_height = $('.to-options').outerHeight();
+
+    $('.list').css('margin-top', to_opt_height);
+
+
+    get_all_scripts_with_sticky_sort().then(function(scripts) {
         if (!scripts.length) {
-            $('.list').html('<p>Скриптов не найдено</p>');
+            $('.list').html('<p>' + get_locale_message('__MSG_popup_scriptsnotfound__') + '</p>');
             return;
         }
 
@@ -27,6 +32,8 @@ $(document).ready(function() {
             $('.list').prepend(item_html);
         });
     });
+
+    i18n_init();
 });
 
 
@@ -36,7 +43,7 @@ function get_item_markup(data) {
     item.attr('data-id', data.id);
     item.append('<div class="title">' + data.name + '</div>');
     item.append(`<div class="action">
-        <a href="#">Встроить</a>
+        <a href="#">` + get_locale_message('__MSG_popup_embed_btn__') + `</a>
     </div>`);
 
     return item;

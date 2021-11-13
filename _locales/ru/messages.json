@@ -1,0 +1,179 @@
+{
+    "extension_name": {
+        "message": "Кастомные скрипты"
+    },
+    "extension_description": {
+        "message": "Вставка кастомных css и js скриптов в сайты"
+    },
+    "options_head_title": {
+        "message": "Кастомные скрипты"
+    },
+    "options_page_title": {
+        "message": "Управление кастомными скриптами"
+    },
+    "options_memory_title": {
+        "message": "Использование памяти"
+    },
+    "options_addform_title": {
+        "message": "Добавить скрипт"
+    },
+    "options_addform_tabcommon": {
+        "message": "Общее"
+    },
+    "options_addform_tabcss": {
+        "message": "CSS"
+    },
+    "options_addform_tabjs": {
+        "message": "JS"
+    },
+    "options_addform_field_name_label": {
+        "message": "Название"
+    },
+    "options_addform_field_sticky_label": {
+        "message": "Закрепить в списке попапа"
+    },
+    "options_addform_field_patterns_label": {
+        "message": "Шаблоны соответствия URL"
+    },
+    "options_addform_patterns_allsites_btn": {
+        "message": "[Все сайты]"
+    },
+    "options_addform_pattern_singleurl_btn": {
+        "message": "[Нужный урл]"
+    },
+    "options_addform_field_patternsdisable_label": {
+        "message": "Временно отключить паттерны"
+    },
+    "options_addform_field_cssremotefiles_label": {
+        "message": "URL'ы удаленных файлов"
+    },
+    "options_addform_field_csscode_label": {
+        "message": "Код CSS"
+    },
+    "options_addform_field_jsstartat_label": {
+        "message": "Запускать при"
+    },
+    "options_addform_field_jsremotefiles_label": {
+        "message": "URL'ы удаленных файлов"
+    },
+    "options_addform_field_jsstartat_start": {
+        "message": "Старте документа"
+    },
+    "options_addform_field_jsstartat_idle": {
+        "message": "Промежуточное значение"
+    },
+    "options_addform_field_jsstartat_end": {
+        "message": "Загрузке документа"
+    },
+    "options_addform_field_insertjq_label": {
+        "message": "Подключить jQuery"
+    },
+    "options_addform_field_jscode_label": {
+        "message": "Код JS"
+    },
+    "options_addform_repeater_add": {
+        "message": "Добавить"
+    },
+    "options_addform_repeater_remove": {
+        "message": "Удалить поле"
+    },
+    "options_addform_reset": {
+        "message": "Сбросить"
+    },
+    "options_addform_submit": {
+        "message": "Сохранить"
+    },
+    "options_scriptslist_title": {
+        "message": "Мои скрипты"
+    },
+    "options_scriptslist_name_column": {
+        "message": "Заголовок"
+    },
+    "options_scriptslist_dataedit_btn_title": {
+        "message": "Изменить данные"
+    },
+    "options_scriptslist_cssedit_btn_title": {
+        "message": "Изменить CSS"
+    },
+    "options_scriptslist_jsedit_btn_title": {
+        "message": "Изменить JS"
+    },
+    "options_scriptslist_scriptremove_btn_title": {
+        "message": "Удалить"
+    },
+    "options_reference_title": {
+        "message": "Справка"
+    },
+    "options_reference_documentidle": {
+        "message": "Промежуточное значение (document_idle) - грубо говоря, время загрузки подбирается само"
+    },
+    "options_reference_workexplanation": {
+        "message": "Скрипты загружаются последовательно: сначала подряд по URL, а потом код"
+    },
+    "options_reference_sometimesnotworking": {
+        "message": "Бывало, что почему-то не срабатывал паттерн. Помогла перезагрузка расширения"
+    },    
+    "options_reference_removewarning": {
+        "message": "При удалении расширения, память очищается и все скрипты удалятся"
+    },
+    "options_reference_memorylimit": {
+        "message": "Максимальный обьем хранилища около 5 мегабайт, ограничение на расширение"
+    },
+    "options_reference_patternsdocumentation": {
+        "message": "Документация по паттернам URL"
+    },
+    "options_importform_title": {
+        "message": "Импорт / Экспорт"
+    },
+    "options_importform_field_json_title": {
+        "message": "JSON"
+    },
+    "options_importform_export_btn": {
+        "message": "Экспорт"
+    },
+    "options_importform_download_btn": {
+        "message": "Скачать"
+    },
+    "options_importform_submit": {
+        "message": "Импорт"
+    },
+    "options_importformshow_btn": {
+        "message": "Импорт / Экспорт"
+    },
+    "options_alert_defaultmessage": {
+        "message": "Уведомление"
+    },
+    "options_alert_fielderror": {
+        "message": "Ошибка в поле"
+    },
+    "options_alert_codeempty": {
+        "message": "Код не может быть пустым"
+    },
+    "options_alert_scriptadded": {
+        "message": "Скрипт добавлен"
+    },
+    "options_alert_scriptupdated": {
+        "message": "Скрипт обновлен"
+    },
+    "options_alert_scriptremoved": {
+        "message": "Скрипт удален"
+    },
+    "options_alert_scriptsnotfound": {
+        "message": "Скриптов не найдено"
+    },    
+    "options_alert_invalidjson": {
+        "message": "Невалидный JSON"
+    },
+    "options_alert_importsuccess": {
+        "message": "Импорт из JSON произошел успешно"
+    },
+    "popup_tooptions_btn": {
+        "message": "К настройкам"
+    },
+    "popup_scriptsnotfound": {
+        "message": "Скриптов не найдено"
+    },
+    "popup_embed_btn": {
+        "message": "Встроить"
+    }
+}

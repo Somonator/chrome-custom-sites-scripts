@@ -85,7 +85,7 @@ textarea {
     resize: vertical;
 }
 
-/* ютубовский чекбокс */
+/* youtube checkbox */
 input[type="checkbox"] {
     background-color: #cccccc;
     outline: none;
@@ -131,7 +131,7 @@ select {
     cursor: not-allowed;
 }
 
-/* кнопки */
+/* buttons */
 .btn {
     background:#2c3e50;
     outline: none;
@@ -154,14 +154,14 @@ select {
     padding: 5px 10px;
 }
 
-/* контейнер */
+/* containers */
 .container {
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
 }
 
-/* флекс элементы */
+/* flex */
 .f-center {
     display: flex;
     justify-content: center;
@@ -176,7 +176,7 @@ select {
     justify-content: flex-end;  
 }
 
-/* оформление */
+/* decor */
 .page-section {
     width: 100%;
     padding: 20px;
@@ -185,29 +185,27 @@ select {
     border-bottom: 1px dashed #dedede;
 }
 
-/* главная обертка */
+/* main wrap */
 .site-wrap {
     background: #ffffff;
     box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);
     margin-top: 50px;
     margin-bottom: 50px;
 }
-.site-wrap .f-right {
-    gap: 10px;
-}
 
-/* Шапка */
+/* header */
 .header {
     justify-content: space-between;
     align-items: center;
 }
 .header .memory-state p {
     font-size: 14px;
+    text-align: center;
     margin-bottom: 5px;
 }
 .header .memory-state progress {
     border: 0;
-    width: 100%;
+    width: 150px;
     height: 20px;
     margin-bottom: 5px;
     position: relative;
@@ -241,7 +239,7 @@ select {
     right: 5px;
 }
 
-/* заголовки и подписи */
+/* titles and captions */
 .title {
     font-size: 25px;
     font-weight: 600;    
@@ -256,7 +254,7 @@ select {
     font-size: 12px;
 }
 
-/* обертка двух колонок */
+/* wrap of two columns */
 .page-wrap {
     gap: 40px;
     padding: 20px; 
@@ -267,7 +265,7 @@ select {
     flex: 1;
 }
 
-/* поля формы */
+/* form fields */
 .field-wrap {
     display: block;
     margin-bottom: 20px;
@@ -280,12 +278,21 @@ select {
 .field-wrap label a {
     text-decoration: underline;
 }
-.field-wrap .CodeMirror {
-    min-height: 50px;
-    resize: vertical;
+.field-wrap > .field-wrap {
+    margin-bottom: 5px;
 }
-.field-wrap .CodeMirror-lines {
-    padding: 4px 0;
+
+.field-wrap.horyzontal {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+.field-wrap.horyzontal label {
+    font-weight: 400;
+}
+.field-wrap.horyzontal input {
+    margin-right: 10px;
 }
 
 .field-wrap .repeater-field {
@@ -320,7 +327,37 @@ select {
     background: #ffffff !important; 
 }
 
-/* таблица скриптов */
+/* add script form */
+.add-script .submit-buttons {
+    gap: 10px;
+}
+
+/* CodeMirror */
+.CodeMirror {
+    min-height: 50px;
+    overscroll-behavior: contain;
+    resize: vertical;
+}
+.CodeMirror-lines {
+    padding: 4px 0;
+}
+.CodeMirror *::selection {
+    background-color: #3e4451 !important;
+}
+.CodeMirror-code,
+.CodeMirror-code * {
+    font-family: Consolas, 'Courier New', monospace !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+.CodeMirror .CodeMirror-linenumber {
+    user-select: none !important;
+}
+.CodeMirror .CodeMirror-activeline-gutter .CodeMirror-linenumber {
+    color: #a3aaa0 !important;
+}
+
+/* table scripts */
 .list-scripts tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -356,17 +393,25 @@ select {
     transform: translateX(-50%);
 }
 
-/* подвал */
+/* import form */
+.import-form .submit-buttons.space-between {
+    justify-content: space-between;
+}
+.import-form .submit-buttons .f-row {
+    gap: 10px;
+}
+
+/* footer */
 .footer {
     text-align: center;
 }
 
 
-/* табы */
+/* tabs */
 .tabs .tabs-header {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 .tabs .tabs-header .tab-btn {
     background: #D3D3D3;
@@ -398,7 +443,7 @@ select {
     display: block;
 }
 
-/* блоки уведомлений */
+/* alerts */
 .alert {
     background-color: #000000;
     color: #ffffff;

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="__MSG_options_head_title__"></title>
+
+    <link rel="stylesheet" href="css/symbol-icons.css">
+    <link rel="stylesheet" href="css/options-page.css">
+    <link rel="stylesheet" href="css/options-page-night.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/dialog/dialog.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/show-hint.min.css">
+    <link rel="stylesheet" href="css/codemirror-one-dark-theme.css">
+</head>
+<body>
+    <div class="container site-wrap">
+        <div class="f-row header page-section s-style">
+            <h1 class="title" data-i18n="__MSG_options_page_title__"></h1>
+
+            <div id="memory-use" class="memory-state">
+                <p data-i18n="__MSG_options_memory_title__"></p>
+                <progress max="100" value="1"></progress>
+            </div>
+        </div>
+
+        <div class="f-row page-wrap page-section s-style">
+            <div class="left">
+                <form id="add_script" class="add-script" autocomplete="off" novalidate>
+                    <input type="hidden" name="id">
+
+                    <h2 class="sub-title">
+                        <replace data-i18n="__MSG_options_addform_title__"></replace>
+                        <span></span>
+                    </h2>
+
+                    <div class="tabs">
+                        <div class="tabs-header">
+                            <div class="tab-btn active" data-i18n="__MSG_options_addform_tabcommon__"></div>
+                            <div id="tab_button_css" class="tab-btn" data-i18n="__MSG_options_addform_tabcss__"></div>
+                            <div id="tab_button_js" class="tab-btn" data-i18n="__MSG_options_addform_tabjs__"></div>
+                        </div>
+                        <div class="tabs-content">
+                            <div class="tab-content active">
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_name_label__"></label>
+                                    <input type="text" name="name" required>
+                                </div>
+
+                                <div class="field-wrap horyzontal">
+                                    <label data-i18n="__MSG_options_addform_field_sticky_label__"></label>
+                                    <input type="checkbox" name="is_sticky" value="true">
+                                </div>  
+                                
+                                <div class="field-wrap">
+                                    <label>
+                                        <replace data-i18n="__MSG_options_addform_field_patterns_label__"></replace>
+                                        <a href="#" class="to-all-urls" data-i18n="__MSG_options_addform_patterns_allsites_btn__"></a>
+                                        <a href="#" class="to-some-url" data-i18n="__MSG_options_addform_pattern_singleurl_btn__"></a>
+                                    </label>
+
+                                    <div class="field-wrap horyzontal">
+                                        <label data-i18n="__MSG_options_addform_field_patternsdisable_label__"></label>
+                                        <input type="checkbox" name="is_patterns_disable" value="true">
+                                    </div>                                    
+
+                                    <div class="repeater-field">
+                                        <input type="text" name="match_patterns[]">
+                                        <a href="#" title="__MSG_options_addform_repeater_remove__" class="delete f-center" style="display: none;" data-i18n></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field" data-i18n="__MSG_options_addform_repeater_add__"></a>
+                                    </div>
+                                </div>                                
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_cssremotefiles_label__"></label>
+
+                                    <div class="repeater-field">
+                                        <input type="text" name="css_remote_files[]">
+                                        <a href="#" title="__MSG_options_addform_repeater_remove__" class="delete f-center" style="display: none;" data-i18n></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field" data-i18n="__MSG_options_addform_repeater_add__"></a>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_csscode_label__"></label>
+                                    <textarea id="css_code" name="css_code"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_jsstartat_label__"></label>
+                                    <select name="js_run_at">
+                                        <option value="document_start" data-i18n="__MSG_options_addform_field_jsstartat_start__"></option>
+                                        <option value="document_idle" data-i18n="__MSG_options_addform_field_jsstartat_idle__"></option>
+                                        <option value="document_end" data-i18n="__MSG_options_addform_field_jsstartat_end__" selected></option>
+                                    </select>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_jsremotefiles_label__"></label>
+
+                                    <div class="field-wrap horyzontal">
+                                        <label data-i18n="__MSG_options_addform_field_insertjq_label__"></label>                                        
+                                        <input type="checkbox" name="is_insert_jq" value="true">
+                                    </div>                                    
+
+                                    <div class="repeater-field">
+                                        <input type="text" name="js_remote_files[]">
+                                        <a href="#" title="__MSG_options_addform_repeater_remove__" class="delete f-center" style="display: none;" data-i18n></a>                            
+                                    </div>
+
+                                    <div class="f-right">
+                                        <a href="#" class="btn btn-second add-repeater-field" data-i18n="__MSG_options_addform_repeater_add__"></a>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <label data-i18n="__MSG_options_addform_field_jscode_label__"></label>
+
+                                    <textarea id="js_code" name="js_code"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-buttons f-right">
+                        <input type="button" class="btn reset-form" value="__MSG_options_addform_reset__" style="display: none;" data-i18n>
+                        <input type="submit" class="btn" value="__MSG_options_addform_submit__" data-i18n>
+                    </div>                        
+                </form>              
+            </div>
+
+            <div class="right">
+                <h2 class="sub-title" data-i18n="__MSG_options_scriptslist_title__"></h2>
+
+                <table class="list-scripts">
+                    <thead>
+                        <tr>
+                            <th data-i18n="__MSG_options_scriptslist_name_column__"></th>
+                            <th></th>
+                        </tr>                    
+                    </thead>
+                    <tbody></tbody>
+                </table>                    
+            </div>
+        </div>
+
+        <div class="help page-section s-style">
+            <h2 class="sub-title" data-i18n="__MSG_options_reference_title__"></h2>
+
+            <p data-i18n="__MSG_options_reference_documentidle__"></p>
+            <p data-i18n="__MSG_options_reference_workexplanation__"></p>
+            <p data-i18n="__MSG_options_reference_sometimesnotworking__"></p>
+            <p data-i18n="__MSG_options_reference_removewarning__"></p>
+            <p data-i18n="__MSG_options_reference_memorylimit__"></p>            
+            <p><a href="https://developer.chrome.com/docs/extensions/mv2/match_patterns/" target="_blank" data-i18n="__MSG_options_reference_patternsdocumentation__"></a></p>                  
+        </div>
+
+        <form id="json-form" class="import-form page-section s-style" style="display: none;">
+            <h2 class="sub-title" data-i18n="__MSG_options_importform_title__"></h2>
+
+            <div class="field-wrap">
+                <label data-i18n="__MSG_options_importform_field_json_title__"></label>
+                <textarea name="json" required></textarea>
+            </div>
+
+            <div class="submit-buttons f-right">
+                <input type="button" name="download" class="btn" value="__MSG_options_importform_download_btn__" style="display: none;" data-i18n>
+
+                <div class="f-row">
+                    <input type="button" name="export" class="btn" value="__MSG_options_importform_export_btn__" data-i18n>
+                    <input type="submit" name="import" class="btn" value="__MSG_options_importform_submit__" data-i18n>                
+                </div>                
+            </div>
+
+
+        </form>        
+
+        <div class="footer page-section">
+            <a id="to-json" href="#" class="to-json" data-i18n="__MSG_options_importformshow_btn__"></a>
+        </div>        
+    </div>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/htmlmixed/htmlmixed.min.js"></script>    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/css-hint.min.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/html-hint.min.js"></script>    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/dialog/dialog.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/search/searchcursor.min.js"></script>         
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/search/search.min.js"></script>
+    <script src="js/codemirror-emmet.js"></script>
+
+
+    <script src="../extension/api.js"></script>
+    <script src="../extension/i18n.js"></script>
+    <script src="../libs/jquery.min.js"></script>
+    <script src="../libs/jquery-libs.js"></script>
+    <script src="js/download2.js"></script>
+    <script src="js/options-page.js"></script>
+</body>
+</html>

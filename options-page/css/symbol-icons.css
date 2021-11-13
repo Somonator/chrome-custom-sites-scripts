@@ -1,0 +1,9 @@
+.icon-sticky::before {
+    content: '⮑';
+}
+.icon-edit::before {
+    content: '✎';
+}
+.icon-delete::before {
+    content: '✖';
+}
