@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="__MSG_options_head_title__"></title>
 
-    <link rel="stylesheet" href="css/symbol-icons.css">
-    <link rel="stylesheet" href="css/options-page.css">
-    <link rel="stylesheet" href="css/options-page-night.css">
+    <link rel="stylesheet" href="assets/css/libs/dashicons.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/options-page.css">
+    <link rel="stylesheet" href="assets/css/night-theme.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/dialog/dialog.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/show-hint.min.css">
-    <link rel="stylesheet" href="css/codemirror-one-dark-theme.css">
+    <link rel="stylesheet" href="assets/css/libs/codemirror/codemirror.min.css">
+    <link rel="stylesheet" href="assets/css/libs/codemirror/dialog.min.css">
+    <link rel="stylesheet" href="assets/css/libs/codemirror/show-hint.min.css">
+    <link rel="stylesheet" href="assets/css/libs/codemirror/one-dark-theme.css">
 </head>
-<body>
+<body class="options">
     <div class="container site-wrap">
         <div class="f-row header page-section s-style">
             <h1 class="title" data-i18n="__MSG_options_page_title__"></h1>
-
-            <div id="memory-use" class="memory-state">
-                <p data-i18n="__MSG_options_memory_title__"></p>
-                <progress max="100" value="1"></progress>
-            </div>
         </div>
 
         <div class="f-row page-wrap page-section s-style">
@@ -30,10 +26,7 @@
                 <form id="add_script" class="add-script" autocomplete="off" novalidate>
                     <input type="hidden" name="id">
 
-                    <h2 class="sub-title">
-                        <replace data-i18n="__MSG_options_addform_title__"></replace>
-                        <span></span>
-                    </h2>
+                    <h2 class="sub-title" data-i18n="__MSG_options_addform_title__"></h2>
 
                     <div class="tabs">
                         <div class="tabs-header">
@@ -54,11 +47,7 @@
                                 </div>  
                                 
                                 <div class="field-wrap">
-                                    <label>
-                                        <replace data-i18n="__MSG_options_addform_field_patterns_label__"></replace>
-                                        <a href="#" class="to-all-urls" data-i18n="__MSG_options_addform_patterns_allsites_btn__"></a>
-                                        <a href="#" class="to-some-url" data-i18n="__MSG_options_addform_pattern_singleurl_btn__"></a>
-                                    </label>
+                                    <label data-i18n="__MSG_options_addform_field_patterns_label__"></label>
 
                                     <div class="field-wrap horyzontal">
                                         <label data-i18n="__MSG_options_addform_field_patternsdisable_label__"></label>
@@ -155,18 +144,7 @@
             </div>
         </div>
 
-        <div class="help page-section s-style">
-            <h2 class="sub-title" data-i18n="__MSG_options_reference_title__"></h2>
-
-            <p data-i18n="__MSG_options_reference_documentidle__"></p>
-            <p data-i18n="__MSG_options_reference_workexplanation__"></p>
-            <p data-i18n="__MSG_options_reference_sometimesnotworking__"></p>
-            <p data-i18n="__MSG_options_reference_removewarning__"></p>
-            <p data-i18n="__MSG_options_reference_memorylimit__"></p>            
-            <p><a href="https://developer.chrome.com/docs/extensions/mv2/match_patterns/" target="_blank" data-i18n="__MSG_options_reference_patternsdocumentation__"></a></p>                  
-        </div>
-
-        <form id="json-form" class="import-form page-section s-style" style="display: none;">
+        <form id="json_form" class="import-form page-section s-style" style="display: none;">
             <h2 class="sub-title" data-i18n="__MSG_options_importform_title__"></h2>
 
             <div class="field-wrap">
@@ -182,41 +160,45 @@
                     <input type="submit" name="import" class="btn" value="__MSG_options_importform_submit__" data-i18n>                
                 </div>                
             </div>
-
-
         </form>        
 
-        <div class="footer page-section">
-            <a id="to-json" href="#" class="to-json" data-i18n="__MSG_options_importformshow_btn__"></a>
+        <div class="footer f-row page-section">
+            <a id="to_json" href="#" data-i18n="__MSG_options_importformshow_btn__"></a>
+            <div class="right-menu f-row">
+                <a id="to_help" href="#" data-i18n="__MSG_options_help_btn__"></a>
+            </div>
         </div>        
     </div>
     
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/xml/xml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/htmlmixed/htmlmixed.min.js"></script>    
+    <script src="extension/api.js"></script>
+    <script src="extension/i18n.js"></script>
+
+    <script src="assets/js/libs/jquery.min.js"></script>
+    <script src="assets/js/libs/jquery-libs.js"></script>
+
+    <script src="assets/js/libs/download2.js"></script>
+
+    <script src="assets/js/common.js"></script>    
+
+    <script src="assets/js/libs/codemirror/codemirror.min.js"></script>
+    <script src="assets/js/libs/codemirror/modes/css.min.js"></script>
+    <script src="assets/js/libs/codemirror/modes/javascript.min.js"></script>
+    <script src="assets/js/libs/codemirror/modes/htmlmixed.min.js"></script>    
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/show-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/css-hint.min.js"></script>   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/javascript-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/addon/hint/html-hint.min.js"></script>    
+    <script src="assets/js/libs/codemirror/hints/show-hint.min.js"></script>
+    <script src="assets/js/libs/codemirror/hints/css-hint.min.js"></script>   
+    <script src="assets/js/libs/codemirror/hints/javascript-hint.min.js"></script>
+    <script src="assets/js/libs/codemirror/hints/html-hint.min.js"></script>    
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/dialog/dialog.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/selection/active-line.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/search/searchcursor.min.js"></script>         
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/edit/matchbrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/addon/search/search.min.js"></script>
-    <script src="js/codemirror-emmet.js"></script>
+    <script src="assets/js/libs/codemirror/addons/dialog.min.js"></script>
+    <script src="assets/js/libs/codemirror/addons/active-line.min.js"></script>
+    <script src="assets/js/libs/codemirror/addons/searchcursor.min.js"></script>         
+    <script src="assets/js/libs/codemirror/addons/matchbrackets.min.js"></script>
+    <script src="assets/js/libs/codemirror/addons/search.min.js"></script>
+    <script src="assets/js/libs/codemirror/addons/emmet.js"></script>
 
-
-    <script src="../extension/api.js"></script>
-    <script src="../extension/i18n.js"></script>
-    <script src="../libs/jquery.min.js"></script>
-    <script src="../libs/jquery-libs.js"></script>
-    <script src="js/download2.js"></script>
-    <script src="js/options-page.js"></script>
+    <script src="assets/js/options-page.js"></script>
 </body>
 </html>

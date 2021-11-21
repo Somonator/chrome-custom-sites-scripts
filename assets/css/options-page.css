@@ -1,0 +1,125 @@
+/* containers */
+.container {
+    /*
+    width: 100%;
+    max-width: 1600px;
+    */
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* decor */
+.page-section {
+    width: 100%;
+    padding: 20px;
+}
+.s-style {
+    border-bottom: 1px dashed #dedede;
+}
+
+/* main wrap */
+.site-wrap {
+    background: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);
+    /*
+    margin-top: 50px;
+    margin-bottom: 50px;
+    */
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+/* header */
+.header {
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* titles and captions */
+.title {
+    font-size: 25px;
+    font-weight: 600;    
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+.sub-title {
+    font-size: 21px;
+    margin: 0 0 20px 0;
+}
+.caption {
+    font-size: 12px;
+}
+
+/* wrap of two columns */
+.page-wrap {
+    gap: 40px;
+    padding: 20px; 
+}
+.page-wrap .left,
+.page-wrap .right {
+    min-width: 0;
+    flex: 1;
+}
+.page-wrap .left {
+    flex-basis: 34%;
+}
+
+/* add script form */
+.add-script .submit-buttons {
+    gap: 10px;
+}
+
+/* table scripts */
+.list-scripts tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.list-scripts tr td:nth-child(2) {
+    width: 130px;
+}
+.list-scripts .manage {
+    text-align: right;
+    user-select: none;
+}
+.list-scripts .manage a,
+.list-scripts .manage span {
+    font-size: 20px;
+	color: #444444;
+	margin: 2px;
+	cursor: pointer;
+}
+.list-scripts .manage [data-lang] {
+    position: relative;
+}
+.list-scripts .manage [data-lang]::after {
+    content: attr(data-lang);
+    background-color: #444444;
+    width: auto;
+    height: 12px;    
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 0.9;
+    text-align: center;
+    display: block;
+    padding: 0 2px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+/* import form */
+.import-form .submit-buttons.space-between {
+    justify-content: space-between;
+}
+.import-form .submit-buttons .f-row {
+    gap: 10px;
+}
+
+/* footer */
+.footer {
+    justify-content: space-between;
+}
+.footer .right-menu {
+    gap: 10px;
+}

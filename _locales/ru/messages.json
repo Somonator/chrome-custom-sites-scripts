@@ -1,21 +1,23 @@
 {
     "extension_name": {
-        "message": "Кастомные скрипты"
+        "message": "Sites custom scripts - встраивайте собственные CSS и JS коды в сайты"
     },
     "extension_description": {
-        "message": "Вставка кастомных css и js скриптов в сайты"
+        "message": "С помощью этого инструмента вы можете модифицировать сайты под себя. Встраивайте от целых библиотек до маленьких правок."
     },
     "options_head_title": {
-        "message": "Кастомные скрипты"
+        "message": "Sites custom codes"
     },
     "options_page_title": {
-        "message": "Управление кастомными скриптами"
-    },
-    "options_memory_title": {
-        "message": "Использование памяти"
+        "message": "Управление кастомными кодами"
     },
     "options_addform_title": {
-        "message": "Добавить скрипт"
+        "message": "Добавить код $span_id$",
+        "placeholders": {
+            "span_id": {
+                "content": "<span></span>"
+            }       
+        }
     },
     "options_addform_tabcommon": {
         "message": "Общее"
@@ -33,13 +35,18 @@
         "message": "Закрепить в списке попапа"
     },
     "options_addform_field_patterns_label": {
-        "message": "Шаблоны соответствия URL"
-    },
-    "options_addform_patterns_allsites_btn": {
-        "message": "[Все сайты]"
-    },
-    "options_addform_pattern_singleurl_btn": {
-        "message": "[Нужный урл]"
+        "message": "Шаблоны соответствия URL $allsites_btn_start$[Все сайты]$btns_end$ $singleurl_btn_start$[Нужный урл]$btns_end$",
+        "placeholders": {
+            "allsites_btn_start": {
+                "content": "<a href=\"#\" class=\"to-all-urls\">"
+            },      
+            "singleurl_btn_start": {
+                "content": "<a href=\"#\" class=\"to-some-url\">"
+            }, 
+            "btns_end": {
+                "content": "</a>"
+            }
+        }
     },
     "options_addform_field_patternsdisable_label": {
         "message": "Временно отключить паттерны"
@@ -78,13 +85,13 @@
         "message": "Удалить поле"
     },
     "options_addform_reset": {
-        "message": "Сбросить"
+        "message": "Сбросить форму"
     },
     "options_addform_submit": {
         "message": "Сохранить"
     },
     "options_scriptslist_title": {
-        "message": "Мои скрипты"
+        "message": "Мои коды"
     },
     "options_scriptslist_name_column": {
         "message": "Заголовок"
@@ -101,26 +108,8 @@
     "options_scriptslist_scriptremove_btn_title": {
         "message": "Удалить"
     },
-    "options_reference_title": {
-        "message": "Справка"
-    },
-    "options_reference_documentidle": {
-        "message": "Промежуточное значение (document_idle) - грубо говоря, время загрузки подбирается само"
-    },
-    "options_reference_workexplanation": {
-        "message": "Скрипты загружаются последовательно: сначала подряд по URL, а потом код"
-    },
-    "options_reference_sometimesnotworking": {
-        "message": "Бывало, что почему-то не срабатывал паттерн. Помогла перезагрузка расширения"
-    },    
-    "options_reference_removewarning": {
-        "message": "При удалении расширения, память очищается и все скрипты удалятся"
-    },
-    "options_reference_memorylimit": {
-        "message": "Максимальный обьем хранилища около 5 мегабайт, ограничение на расширение"
-    },
-    "options_reference_patternsdocumentation": {
-        "message": "Документация по паттернам URL"
+    "options_scriptslist_scriptremove_confirm": {
+        "message": "Вы действительно хотите удалить скрипт?"
     },
     "options_importform_title": {
         "message": "Импорт / Экспорт"
@@ -132,7 +121,7 @@
         "message": "Экспорт"
     },
     "options_importform_download_btn": {
-        "message": "Скачать"
+        "message": "Скачать файл json"
     },
     "options_importform_submit": {
         "message": "Импорт"
@@ -140,8 +129,8 @@
     "options_importformshow_btn": {
         "message": "Импорт / Экспорт"
     },
-    "options_alert_defaultmessage": {
-        "message": "Уведомление"
+    "options_help_btn": {
+        "message": "Справка"
     },
     "options_alert_fielderror": {
         "message": "Ошибка в поле"
@@ -150,16 +139,16 @@
         "message": "Код не может быть пустым"
     },
     "options_alert_scriptadded": {
-        "message": "Скрипт добавлен"
+        "message": "Код добавлен"
     },
     "options_alert_scriptupdated": {
-        "message": "Скрипт обновлен"
+        "message": "Код обновлен"
     },
     "options_alert_scriptremoved": {
-        "message": "Скрипт удален"
+        "message": "Код удален"
     },
     "options_alert_scriptsnotfound": {
-        "message": "Скриптов не найдено"
+        "message": "Кодов не найдено"
     },    
     "options_alert_invalidjson": {
         "message": "Невалидный JSON"
@@ -167,11 +156,110 @@
     "options_alert_importsuccess": {
         "message": "Импорт из JSON произошел успешно"
     },
+    "help_head_title": {
+        "message": "Справка | Sites custom codes"
+    },
+    "help_page_title": {
+        "message": "Справка"
+    },
+    "help_about_title": {
+        "message": "О расширении"
+    },
+    "help_about_p1": {
+        "message": "Этот инструмент я создавал для себя, но все-таки решил опубликовать. Его цель - легкость встраивания собственных CSS и JS кодов в сайты."
+    },
+    "help_about_p2": {
+        "message": "Мне не нравиться как выглядят или работают некоторые сайты. Например, окно видео плеера слишком маленькое или светлая тема ночью сжигает мои глаза. Ну и, иногда, мне может понадобиться инструмент, чтобы что-то автоматизировать на сайте."
+    },
+    "help_about_p3": {
+        "message": "Расширение призвано решить эту проблему."
+    },
+    "help_startusuage_title": {
+        "message": "Начало использования"
+    },
+    "help_startusuage_p1": {
+        "message": "Вся настройка происходит в параметрах расширения (далее админ. панель). Интерфейс админ. панели прост: слева форма добавления и редактирования, справа список сохраненных кодов."
+    },
+    "help_editform_title": {
+        "message": "Добавление и редактирование"
+    },
+    "help_editform_p1": {
+        "message": "Как вы можете заметить форма состоит из трех разделов: \"Общее\" и \"CSS\", и \"JS\"."
+    },
+    "help_editform_p2": {
+        "message": "Во вкладке \"Общее\" находятся настройки встраивания и поля общего назначения. Вы можете указать заголовок, закрепить код в списке, а также указать паттерны URL для автоматического встраивания кода в сайты. По поводу паттернов, расширение использует упрощенные регулярные выражения (см. $link_to_doc$).",
+        "placeholders": {
+            "link_to_doc": {
+                "content": "<a href=\"https://developer.chrome.com/docs/extensions/mv2/match_patterns/\" target=\"_blank\">Match patterns</a>"
+            }       
+        }
+    },
+    "help_editform_p3": {
+        "message": "Во вкладках \"CSS\" и \"JS\", происходит работа с кодом. Они практически одинаковые, поэтому я объясню поля на основе второй. Первое поле, время загрузки кода, разберем варианты:"
+    },
+    "help_editform_listload_li1": {
+        "message": "При старте загрузки страницы (\"document_start\") - в начале загрузки страницы код ожидает появления body и начинает процес."
+    },
+    "help_editform_listload_li2": {
+        "message": "Промежуточное значение (\"document_idle\") - цитата из документации Google: $blockquote_start$Браузер выбирает время для внедрения скриптов между \"document_end\" и сразу после срабатывания события window.onload. Точный момент внедрения зависит от того, насколько сложен документ и как долго он загружается, и оптимизирован для скорости загрузки страницы.$blockquote_end$",
+        "placeholders": {
+            "blockquote_start": {
+                "content": "<blockquote>"
+            },       
+            "blockquote_end": {
+                "content": "</blockquote>"
+            }       
+        }
+    },
+    "help_editform_listload_li3": {
+        "message": "При загрузке страницы (\"document_end\") - встраивание после полной загрузки документа."
+    },
+    "help_editform_p4": {
+        "message": "В следующих полях, вы можете использовать удаленные файлы и написать сам код. Для удобства, подключен плагин Emmet. Если указаны удаленные файлы, порядок загрузки следующий: сначала по порядку загружаются файлы, а теперь сам код (сделано, на случай подключения библиотек)."
+    },
+    "help_codelist_title": {
+        "message": "Список ваших кодов"
+    },
+    "help_codelist_p1": {
+        "message": "Все ваши коды, выведены в таблице по дате добавления. Вы можете редактировать и удалять их. Важно! чем их больше, тем дольше они будут загружаться и обрабатываться. Рекомендуемое количество кодов до 50. Большое количество данных крашит страницы и браузер блокирует расширение."
+    },
+    "help_import_title": {
+        "message": "Импорт и экспорт"
+    },
+    "help_import_p1": {
+        "message": "Важно знать, что при удалении расширения все данные автоматически удаляются. Синхронизация находиться в планах. Как альтернатива, в подвале админ. панели доступна форма импорта и экспорта. С помощью этой формы, можно сохранить резервную копию данных в виде строки JSON. Далее можно импортировать их, вставив в форму, например на другом компьютере."
+    },
+    "help_popup_title": {
+        "message": "О модальном окне"
+    },
+    "help_popup_p1": {
+        "message": "В этом окне вы можете вручную встроить код в активную вкладку."
+    },
+    "help_quicksolutions_title": {
+        "message": "Быстрые решения"
+    },
+    "help_quicksolutions_li1": {
+        "message": "Иногда паттерны могут не срабатывать, помогает перезапуск расширения."
+    },
+    "help_feedback_title": {
+        "message": "Обратная свзяь"
+    },
+    "help_feedback_p1": {
+        "message": "Если у вас остались вопросы, можете написать мне на $link_start$электронную почту$link_end$.",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href=\"mailto:somonator@gmail.com\">"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
     "popup_tooptions_btn": {
         "message": "К настройкам"
     },
     "popup_scriptsnotfound": {
-        "message": "Скриптов не найдено"
+        "message": "Кодов не найдено"
     },
     "popup_embed_btn": {
         "message": "Встроить"

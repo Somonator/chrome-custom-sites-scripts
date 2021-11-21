@@ -131,6 +131,10 @@ select {
     cursor: not-allowed;
 }
 
+.dashicons::before {
+    font-family: inherit;
+}
+
 /* buttons */
 .btn {
     background:#2c3e50;
@@ -154,13 +158,6 @@ select {
     padding: 5px 10px;
 }
 
-/* containers */
-.container {
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
 /* flex */
 .f-center {
     display: flex;
@@ -176,93 +173,40 @@ select {
     justify-content: flex-end;  
 }
 
-/* decor */
-.page-section {
-    width: 100%;
-    padding: 20px;
+/* tabs */
+.tabs .tabs-header {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
-.s-style {
-    border-bottom: 1px dashed #dedede;
-}
-
-/* main wrap */
-.site-wrap {
-    background: #ffffff;
-    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-/* header */
-.header {
-    justify-content: space-between;
-    align-items: center;
-}
-.header .memory-state p {
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 5px;
-}
-.header .memory-state progress {
-    border: 0;
-    width: 150px;
-    height: 20px;
-    margin-bottom: 5px;
-    position: relative;
-    overflow: hidden;
-}
-.header .memory-state progress::-webkit-progress-bar {
+.tabs .tabs-header .tab-btn {
     background: #D3D3D3;
     border-radius: 5px;
-    overflow: hidden;
+    color: #000000;
+    padding: 0.5rem 0.75rem;
+    margin-right: 10px;
+    cursor: pointer;
 }
-.header .memory-state progress::-webkit-progress-value {
-    background: #2c3e50;
-    transition : width 0.5s linear;
+.tabs .tabs-header .tab-btn.active {
+    background: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 50%);
+    cursor: default;
 }
-.header .memory-state progress::before,
-.header .memory-state progress::after {
-    font-weight: 300;
-    font-size: 12px;
-    color: #ffffff;
-    mix-blend-mode: exclusion;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.tabs .tabs-header .tab-btn.disabled {
+    background: #D3D3D3 !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
-.header .memory-state progress::before {
-    content: attr(value) ' KB';
-    left: 5px;
+.tabs .tabs-header .tab-btn:not(.active):focus,
+.tabs .tabs-header .tab-btn:not(.active):hover {
+    background-color: #efefef;
 }
-.header .memory-state progress::after {
-    content: attr(max) ' KB';
-    right: 5px;
+.tabs .tabs-content .tab-content {
+    display: none;
 }
-
-/* titles and captions */
-.title {
-    font-size: 25px;
-    font-weight: 600;    
-    letter-spacing: 0.5px;
-    margin: 0;
-}
-.sub-title {
-    font-size: 21px;
-    margin: 0 0 20px 0;
-}
-.caption {
-    font-size: 12px;
-}
-
-/* wrap of two columns */
-.page-wrap {
-    gap: 40px;
-    padding: 20px; 
-}
-.page-wrap .left,
-.page-wrap .right {
-    min-width: 0;
-    flex: 1;
+.tabs .tabs-content .tab-content.active {
+    display: block;
 }
 
 /* form fields */
@@ -327,11 +271,6 @@ select {
     background: #ffffff !important; 
 }
 
-/* add script form */
-.add-script .submit-buttons {
-    gap: 10px;
-}
-
 /* CodeMirror */
 .CodeMirror {
     min-height: 50px;
@@ -344,6 +283,9 @@ select {
 .CodeMirror *::selection {
     background-color: #3e4451 !important;
 }
+.CodeMirror-code {
+    padding: 5px 0;
+}
 .CodeMirror-code,
 .CodeMirror-code * {
     font-family: Consolas, 'Courier New', monospace !important;
@@ -355,92 +297,6 @@ select {
 }
 .CodeMirror .CodeMirror-activeline-gutter .CodeMirror-linenumber {
     color: #a3aaa0 !important;
-}
-
-/* table scripts */
-.list-scripts tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-.list-scripts .manage {
-    text-align: right;
-    user-select: none;
-}
-.list-scripts .manage a,
-.list-scripts .manage span {
-    font-size: 20px;
-	color: #444444;
-	margin: 2px;
-	cursor: pointer;
-}
-.list-scripts .manage [data-lang] {
-    position: relative;
-}
-.list-scripts .manage [data-lang]::after {
-    content: attr(data-lang);
-    background-color: #444444;
-    width: auto;
-    height: 12px;    
-    font-size: 12px;
-    font-weight: bold;
-    color: #ffffff;
-    line-height: 0.9;
-    text-align: center;
-    display: block;
-    padding: 0 2px;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-}
-
-/* import form */
-.import-form .submit-buttons.space-between {
-    justify-content: space-between;
-}
-.import-form .submit-buttons .f-row {
-    gap: 10px;
-}
-
-/* footer */
-.footer {
-    text-align: center;
-}
-
-
-/* tabs */
-.tabs .tabs-header {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-.tabs .tabs-header .tab-btn {
-    background: #D3D3D3;
-    border-radius: 5px;
-    color: #000000;
-    padding: 0.5rem 0.75rem;
-    margin-right: 10px;
-    cursor: pointer;
-}
-.tabs .tabs-header .tab-btn.active {
-    background: #ffffff;
-    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 50%);
-    cursor: default;
-}
-.tabs .tabs-header .tab-btn.disabled {
-    background: #D3D3D3 !important;
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-.tabs .tabs-header .tab-btn:not(.active):focus,
-.tabs .tabs-header .tab-btn:not(.active):hover {
-    background-color: #efefef;
-}
-.tabs .tabs-content .tab-content {
-    display: none;
-}
-.tabs .tabs-content .tab-content.active {
-    display: block;
 }
 
 /* alerts */

@@ -30,20 +30,14 @@ function handle_i18n_node(msgNode) {
     let [id, paraArray, escapeLt] = convertMsgAsFuncPara(msgNode.getAttribute('data-i18n'));
 
     if (id) {
-        let locale_message = chrome.i18n.getMessage(id, paraArray, {escapeLt});
-
-        if (msgNode.nodeName.toLowerCase() === 'replace') {
-            msgNode.replaceWith(document.createTextNode(locale_message));
-        } else {
-            msgNode.innerHTML = locale_message;
-        }
+        msgNode.innerHTML = chrome.i18n.getMessage(id, paraArray, {escapeLt});
     }
 
     for (let attr of msgNode.attributes) {
         let [attrName, attrValue] = [attr.nodeName, attr.nodeValue];
         let [id, paraArray, escapeLt] = convertMsgAsFuncPara(attrValue);
 
-        if (!id) continue;
+        if (!id || attrName === 'data-i18n') continue;
 
         msgNode.setAttribute(attrName, chrome.i18n.getMessage(id, paraArray, {escapeLt}));
     }

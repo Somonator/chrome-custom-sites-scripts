@@ -1,21 +1,23 @@
 {
     "extension_name": {
-        "message": "Sites custom scripts"
+        "message": "Sites custom codes - inject CSS and JS"
     },
     "extension_description": {
-        "message": "Inject custom css and js codes in sites"
+        "message": "Simple tool to inject your CSS and JS codes in sites"
     },
     "options_head_title": {
-        "message": "Custom scripts"
+        "message": "Sites custom codes"
     },
     "options_page_title": {
-        "message": "Manage custom scripts"
-    },
-    "options_memory_title": {
-        "message": "Memory usuage"
+        "message": "Manage custom codes"
     },
     "options_addform_title": {
-        "message": "Add scripts"
+        "message": "Add codes $span_id$",
+        "placeholders": {
+            "span_id": {
+                "content": "<span></span>"
+            }
+        }
     },
     "options_addform_tabcommon": {
         "message": "Common"
@@ -33,13 +35,18 @@
         "message": "Sticky in popup list"
     },
     "options_addform_field_patterns_label": {
-        "message": "URL's patterns"
-    },
-    "options_addform_patterns_allsites_btn": {
-        "message": "[All sites]"
-    },
-    "options_addform_pattern_singleurl_btn": {
-        "message": "[Single url]"
+        "message": "URL's patterns $allsites_btn_start$[All sites]$btns_end$ $singleurl_btn_start$[Single url]$btns_end$",
+        "placeholders": {
+            "allsites_btn_start": {
+                "content": "<a href=\"#\" class=\"to-all-urls\">"
+            },      
+            "singleurl_btn_start": {
+                "content": "<a href=\"#\" class=\"to-some-url\">"
+            }, 
+            "btns_end": {
+                "content": "</a>"
+            }
+        }
     },
     "options_addform_field_patternsdisable_label": {
         "message": "Disable patterns temporarily"
@@ -78,13 +85,13 @@
         "message": "Remove field"
     }, 
     "options_addform_reset": {
-        "message": "Reset"
+        "message": "Reset form"
     },
     "options_addform_submit": {
         "message": "Save"
     },
     "options_scriptslist_title": {
-        "message": "My scripts"
+        "message": "My codes"
     },
     "options_scriptslist_name_column": {
         "message": "Titles"
@@ -101,26 +108,8 @@
     "options_scriptslist_scriptremove_btn_title": {
         "message": "Remove"
     },
-    "options_reference_title": {
-        "message": "Reference"
-    },
-    "options_reference_documentidle": {
-        "message": "Intermediate value (document_idle) - the load time is selected by the extension"
-    },
-    "options_reference_workexplanation": {
-        "message": "The scripts are loaded sequentially: first in the row by the URL, and then by code"
-    },
-    "options_reference_sometimesnotworking": {
-        "message": "For some reason the pattern didn't work, restarting the extension will help"
-    },    
-    "options_reference_removewarning": {
-        "message": "When you remove an extension, the memory is cleared and all scripts are deleted"
-    },
-    "options_reference_memorylimit": {
-        "message": "The maximum storage capacity is about 5 megabytes, expansion limitation"
-    },
-    "options_reference_patternsdocumentation": {
-        "message": "URL Patterns Documentation"
+    "options_scriptslist_scriptremove_confirm": {
+        "message": "Are you sure you want to delete the script?"
     },
     "options_importform_title": {
         "message": "Import / Export"
@@ -132,7 +121,7 @@
         "message": "Export"
     },
     "options_importform_download_btn": {
-        "message": "Download file"
+        "message": "Download json file"
     },
     "options_importform_submit": {
         "message": "Import"
@@ -140,8 +129,8 @@
     "options_importformshow_btn": {
         "message": "Import / Export"
     },
-    "options_alert_defaultmessage": {
-        "message": "Notice"
+    "options_help_btn": {
+        "message": "Help"
     },
     "options_alert_fielderror": {
         "message": "Error in field"
@@ -150,16 +139,16 @@
         "message": "Code cannot be empty"
     },
     "options_alert_scriptadded": {
-        "message": "Script is added"
+        "message": "Code is added"
     },
     "options_alert_scriptupdated": {
-        "message": "Script upadted"
+        "message": "Code upadted"
     },
     "options_alert_scriptremoved": {
-        "message": "Script removed"
+        "message": "Code removed"
     },
     "options_alert_scriptsnotfound": {
-        "message": "Scripts not found"
+        "message": "Codes not found"
     },    
     "options_alert_invalidjson": {
         "message": "Invalid JSON"
@@ -167,11 +156,110 @@
     "options_alert_importsuccess": {
         "message": "Import from JSON was successful"
     },
+    "help_head_title": {
+        "message": "Reference | Sites custom codes"
+    },
+    "help_page_title": {
+        "message": "Reference"
+    },
+    "help_about_title": {
+        "message": "About extension"
+    },
+    "help_about_p1": {
+        "message": "I created this tool for myself, but still decided to publish it. Its goal is to easily embed your own CSS and JS codes into websites."
+    },
+    "help_about_p2": {
+        "message": "I don't like the way some sites look or work. For example, the video player window is too small or the light theme burns my eyes at night. Well, sometimes, I may need a tool to automate something on the site."
+    },
+    "help_about_p3": {
+        "message": "The extension is intended to solve this problem."
+    },
+    "help_startusuage_title": {
+        "message": "Start to use"
+    },
+    "help_startusuage_p1": {
+        "message": "All configuration takes place in the extension parameters (hereinafter referred to as the admin panel). Admin interface the panel is simple: on the left is the form for adding and editing, on the right is the list of saved codes."
+    },
+    "help_editform_title": {
+        "message": "Adding and editing"
+    },
+    "help_editform_p1": {
+        "message": "As you can see, the form has three sections: \"Common\" and \"CSS\", and \"JS \"."
+    },
+    "help_editform_p2": {
+        "message": "The \"Common\" tab contains embedding settings and general fields. You can specify a title, pin the code to the list, and also specify URL patterns to automatically embed code into sites. Regarding patterns, the extension uses simplified regular expressions (read $link_to_doc$).",
+        "placeholders": {
+            "link_to_doc": {
+                "content": "<a href=\"https://developer.chrome.com/docs/extensions/mv2/match_patterns/\" target=\"_blank\">Match patterns</a>"
+            }       
+        }
+    },
+    "help_editform_p3": {
+        "message": "In the tabs \"CSS\" and \"JS\", you work with the code. They're pretty much the same, so I'll explain the fields based on the second. The first field, code loading time, let's analyze the options:"
+    },
+    "help_editform_listload_li1": {
+        "message": "On document start (\"document_start\") - at the beginning of the page loading, the code waits for the body to appear and starts the process."
+    },
+    "help_editform_listload_li2": {
+        "message": "Intermediate value (\"document_idle\") - quote from google documentation: $blockquote_start$The browser chooses a time to inject scripts between \"document_end\" and immediately after the window.onload event fires. The exact moment of injection depends on how complex the document is and how long it is taking to load, and is optimized for page load speed.$blockquote_end$",
+        "placeholders": {
+            "blockquote_start": {
+                "content": "<blockquote>"
+            },       
+            "blockquote_end": {
+                "content": "</blockquote>"
+            }       
+        }
+    },
+    "help_editform_listload_li3": {
+        "message": "On document load (\"document_end\") - embedding after the document is fully loaded."
+    },
+    "help_editform_p4": {
+        "message": "In the following fields, you can use the remote files and write the code itself. For convenience, plugin Emmet is included. If deleted files are specified, the loading order is as follows: first, the files are loaded in order, and now the code itself (done in case of connecting libraries)."
+    },
+    "help_codelist_title": {
+        "message": "Your codes"
+    },
+    "help_codelist_p1": {
+        "message": "All your codes are listed in the table by the date they were added. You can edit and delete them. Important! the more there are, the longer they will take to load and process. The recommended number of codes is up to 50. A large amount of data crashes the page and the browser blocks the extension."
+    },
+    "help_import_title": {
+        "message": "Import and export"
+    },
+    "help_import_p1": {
+        "message": "It is important to know that when you uninstall an extension, all data is automatically deleted. Synchronization is in the plans. Alternatively, in the basement, the admin. the panel has an import and export form. By using this form, you can save a backup of your data as a JSON string. Then you can import them by pasting them into the form, for example, on another computer."
+    },
+    "help_popup_title": {
+        "message": "About modal window"
+    },
+    "help_popup_p1": {
+        "message": "In this window, you can manually embed the code into the active tab."
+    },
+    "help_quicksolutions_title": {
+        "message": "Quick solutions"
+    },
+    "help_quicksolutions_li1": {
+        "message": "Sometimes patterns may not work, restarting the extension will help."
+    },
+    "help_feedback_title": {
+        "message": "Feedback"
+    },
+    "help_feedback_p1": {
+        "message": "If you have any questions, you can $link_start$email me$link_end$.",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href=\"mailto:somonator@gmail.com\">"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
     "popup_tooptions_btn": {
         "message": "To options"
     },
     "popup_scriptsnotfound": {
-        "message": "Scripts not found"
+        "message": "Codes not found"
     },
     "popup_embed_btn": {
         "message": "Inject"

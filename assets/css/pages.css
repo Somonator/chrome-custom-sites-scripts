@@ -1,0 +1,46 @@
+body {
+    background-color: #f1f1f1;
+    line-height: 1.5;
+}
+h1 {
+    margin-bottom: 30px;
+}
+h2, h3, h4, h5, h6 {
+    margin: 20px 0 10px 0;
+}
+blockquote {
+    border-left: 2px solid black;
+    padding-left: 10px;
+    margin: 15px 0 15px 15px;    
+}
+blockquote::before {
+    content: '"';
+}
+blockquote::after {
+    content: '"';
+}
+p {
+    margin-bottom: 10px;
+}
+ul, ol {
+    padding: 0;
+    padding-left: 15px;
+    margin: 15px;
+}
+li {
+    margin-bottom: 3px;
+}
+li blockquote {
+    margin-left: 0;
+}
+
+
+.container {
+    background-color: #ffffff;
+    box-shadow: -2px -1px 88px 0px rgb(0 0 0 / 17%);
+    width: 100%;
+    max-width: 900px;
+    padding: 25px;
+    /* margin: 50px auto; */
+    margin: 5vh auto;
+}

@@ -2,6 +2,9 @@ body.nigth-mode {
     background: #222226;
     color: #eeeeee;
 }
+body.nigth-mode blockquote {
+    border-left-color: #ffffff;
+}
 body.nigth-mode input[type="text"],
 body.nigth-mode input[type="email"],
 body.nigth-mode input[type="password"],
@@ -10,7 +13,9 @@ body.nigth-mode select {
     background-color: #444446;
     color: #eeeeee;
 }
-body.nigth-mode .site-wrap {
+body.nigth-mode .container,
+body.nigth-mode .list,
+body.nigth-mode .to-options {
     background: #333336;
 }
 body.nigth-mode .list-scripts tbody tr:nth-child(even) {
@@ -18,7 +23,8 @@ body.nigth-mode .list-scripts tbody tr:nth-child(even) {
 }
 body.nigth-mode .list-scripts .manage a,
 body.nigth-mode .list-scripts .manage span,
-body.nigth-mode a {
+body.nigth-mode a,
+body.nigth-mode .to-options {
     color: #eeeeee;
 }
 body.nigth-mode .list-scripts .manage [data-lang]::after {

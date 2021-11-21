@@ -1,3 +1,6 @@
+set_night_theme();
+i18n_init();
+
 $('.list').delegate('a', 'click', function(event) {
     event.preventDefault();
 
@@ -15,11 +18,6 @@ $('.to-options').click(function(event) {
 });
 
 $(document).ready(function() {
-    let to_opt_height = $('.to-options').outerHeight();
-
-    $('.list').css('margin-top', to_opt_height);
-
-
     get_all_scripts_with_sticky_sort().then(function(scripts) {
         if (!scripts.length) {
             $('.list').html('<p>' + get_locale_message('__MSG_popup_scriptsnotfound__') + '</p>');
@@ -32,8 +30,6 @@ $(document).ready(function() {
             $('.list').prepend(item_html);
         });
     });
-
-    i18n_init();
 });
 
 
@@ -45,6 +41,10 @@ function get_item_markup(data) {
     item.append(`<div class="action">
         <a href="#">` + get_locale_message('__MSG_popup_embed_btn__') + `</a>
     </div>`);
+
+    if (data.is_sticky) {
+        item.prepend('<span class="dashicons dashicons-admin-post"></span>');
+    }
 
     return item;
 }

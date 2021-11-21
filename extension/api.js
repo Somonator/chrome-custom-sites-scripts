@@ -6,24 +6,6 @@ function get_random_integer(min, max) {
 
 
 
-async function get_memory_state() {
-    return new Promise(function(resolve, reject) {
-        let state = {
-            use: 0,
-            of: 0
-        };
-
-        chrome.storage.local.getBytesInUse(null, function (number) {
-            state.use = number / 1000;
-            state.of = chrome.storage.local.QUOTA_BYTES / 1000;
-            
-            resolve(state);
-        });
-    });
-}
-
-
-
 async function get_all_scripts() {
     return new Promise(function(resolve, reject) {
         chrome.storage.local.get({ scripts: [] }, function (options) {
@@ -88,7 +70,7 @@ function create_script_obj(form_data, id = get_random_id()) {
         js_run_at: 'document_start',
         js_remote_files: [],
         is_insert_jq: false,
-        js_code: 'alert("default")'
+        js_code: ''
     }, form_data);
 
     script.id = id;
@@ -188,7 +170,7 @@ async function insert_script_by_id(id) {
 async function export_script_json() {
     let scripts = await get_all_scripts();
 
-    return JSON.stringify(scripts, null, 0).replace(/\\n/g, '').replace(/\\r/g, '').replace(/\\t/g, '').replace(/ +(?= )/g,'');
+    return JSON.stringify(scripts, null, 0);
 }
 
 async function import_script_json(json) {

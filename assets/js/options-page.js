@@ -1,22 +1,12 @@
 let $add_form = $('#add_script'),
-    $import_form = $('#json-form'),
+    $import_form = $('#json_form'),
     $scripts_list = $('.list-scripts tbody'),
+    $to_json_btn = $('#to_json'),
+    $to_help_btn = $('#to_help'),
     cm_css, cm_js;
 
-set_night_mode();
-
-
-
-$('.tabs').on('click', '.tab-btn:not(.active)', function(event) {
-    event.preventDefault();
-
-    $(this)
-        .addClass('active').siblings().removeClass('active')
-        .closest('.tabs').find('.tab-content').removeClass('active').eq($(this).index()).addClass('active');
-
-
-});
-
+set_night_theme();
+i18n_init();
 
 
 $add_form.find('.tabs').on('click', '.tab-btn:not(.active)', function(event) {
@@ -45,7 +35,10 @@ $add_form.submit(function(event) {
         return;        
     }
 
-    if (!cm_css.getValue() && !cm_js.getValue()) {
+    if (
+        !($add_form.find('[name="css_remote_files[]"]').filter((i, el) => el.value).length || cm_css.getValue()) &&
+        !($add_form.find('[name="js_remote_files[]"]').filter((i, el) => el.value).length || cm_js.getValue())
+    ) {
         show_alert({
             type: 'error',
             message: get_locale_message('__MSG_options_alert_codeempty__')
@@ -58,20 +51,16 @@ $add_form.submit(function(event) {
             let tr = $scripts_list.find('tr[data-id="' + script_obj.id + '"]');
 
             tr.find('td').eq(0).html(script_obj.name);
-
-            update_memory_state_block();
         });
     } else {
         save_script(form_data).then(function(script_obj) {
             let item_html = get_script_markup(script_obj);
             
+            $add_form.find('.sub-title span').html('(' + script_obj.id + ')');
+            $add_form.find('[name="id"]').val(script_obj.id);
+            $add_form.find('.reset-form').show();
             $scripts_list.prepend(item_html);
-            
-            update_memory_state_block();
         });
-
-        $(this).trigger('reset');
-        $add_form.find('.tabs .tab-btn').eq(0).click();
     }
 
     show_alert({
@@ -138,9 +127,9 @@ $add_form.find('.to-some-url').click(function(event) {
     event.preventDefault();
 
     let site_url = prompt('Введите адрес сайта', ''),
-        pattern = site_url.replace('https', '').replace('http', '').replace(/\/$/, '');
+        pattern = site_url?.replace('https', '').replace('http', '').replace(/\/$/, '');
 
-    if (pattern !== '') {
+    if (pattern && pattern !== '') {
         pattern = '*' + pattern + '/*';
         
         $(this).parents('.field-wrap').find('input').last().val('').focus();
@@ -199,11 +188,13 @@ $scripts_list.delegate('.delete', 'click', function(event) {
     let tr = $(this).parents('tr'),
         id = tr.attr('data-id');
 
-    if (confirm('Вы действительно хотите удалить скрипт?')) {
+    if (confirm(get_locale_message('__MSG_options_scriptslist_scriptremove_confirm__'))) {
         remove_script_by_id(id).then(function(id) {
             tr.remove();
 
-            update_memory_state_block();
+            if ($add_form.find('[name="id"]').val() == id) {
+                $add_form.trigger('reset');
+            }
 
             show_alert({
                 type: 'info',
@@ -215,7 +206,7 @@ $scripts_list.delegate('.delete', 'click', function(event) {
 
 
 
-$('#to-json').click(function(event) {
+$to_json_btn.click(function(event) {
     event.preventDefault();
 
     $import_form.slideToggle(400, function() {
@@ -228,6 +219,13 @@ $('#to-json').click(function(event) {
     });
 });
 
+$to_help_btn.click(function(event) {
+    event.preventDefault();
+
+    window.open(chrome.runtime.getURL('help.html'), '_blank').focus();
+});
+
+
 $import_form.find('[name="export"]').click(function(event) {
     event.preventDefault();
 
@@ -235,7 +233,7 @@ $import_form.find('[name="export"]').click(function(event) {
 
     export_script_json().then(function(json) {
         form.find('[name="json"]').val(json);
-        form.find('.submit_buttons').addClass('space-between');
+        form.find('.submit-buttons').addClass('space-between');
         form.find('[name="download"]').show();
     });
 });
@@ -246,7 +244,7 @@ $import_form.find('[name="download"]').click(function(event) {
     let form = $(this).parents('form'),
         export_json = form.find('[name="json"]').val();
 
-    download(export_json, 'sitescript_export.json', 'application/json');
+    download(export_json, 'scs_export.json', 'application/json');
 });
 
 $import_form.find('[name="import"]').click(function(event) {
@@ -277,7 +275,7 @@ $import_form.find('[name="import"]').click(function(event) {
             $scripts_list.prepend(item_html);
         });
 
-        update_memory_state_block();
+        $import_form.find('[name="json"]').val('');
 
         show_alert({
             type: 'success',
@@ -324,67 +322,8 @@ $(document).ready(function() {
             $scripts_list.prepend(item_html);
         });
     });
-
-    update_memory_state_block();
-    i18n_init();
 });
 
-
-
-function get_random_integer(min, max) {
-    let rand = min - 0.5 + Math.random() * (max - min + 1);
-
-    return Math.round(rand);
-}
-
-function init_codemirror(selector, mode) {
-    let textarea = document.querySelector(selector),
-        codemirror = CodeMirror.fromTextArea(textarea, {
-            theme: 'one-dark',
-            mode: mode,
-            inputStyle: 'contenteditable',
-            direction: 'ltr',
-            indentWithTabs: true,        
-            indentUnit: 4,
-            tabSize: 4,        
-            lineNumbers: true,
-            lineWrapping: true,
-            autoCloseBrackets: true,            
-            matchBrackets: true,
-            continueComments: true,
-            styleActiveLine: true,       
-            saveCursorPosition: true,
-            viewportMargin: Infinity,
-            lint: false,
-            gutters: [],
-            extraKeys: {
-                "Ctrl-Space": "autocomplete",
-                "Ctrl-\/": "toggleComment",
-                "Cmd-\/": "toggleComment",
-                "Alt-F": "findPersistent",
-                "Ctrl-F": "findPersistent",
-                "Cmd-F": "findPersistent"
-            }
-        });
-    
-    codemirror.isDirty = false;
-    codemirror.setSize('100%', 500);
-
-    codemirror.on('change', function(editor) {
-        editor.isDirty = true;
-        textarea.value = editor.getValue();
-    });
-
-    codemirror.on('keyup', function (cm, event) {
-        if (!cm.state.completionActive && event.keyCode > 64 && event.keyCode < 91) {
-            CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
-        }
-    });
-
-    emmetCodeMirror(codemirror);
-
-    return codemirror;
-}
 
 function get_script_markup(script_obj) {
     let item = $('<tr></tr>');
@@ -393,69 +332,12 @@ function get_script_markup(script_obj) {
     item.append(`<td>` + script_obj.name + `</td>`);
     item.append(`<td>
         <div class="manage">
-            <span class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_dataedit_btn_title__') + `"></span>        
-            <span data-lang="css" class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_cssedit_btn_title__') + `"></span>
-            <span data-lang="js" class="edit icon-edit" title="` + get_locale_message('__MSG_options_scriptslist_jsedit_btn_title__') + `"></span>
-            <span class="delete icon-delete" title="` + get_locale_message('__MSG_options_scriptslist_scriptremove_btn_title__') + `"></span>
+            <span class="edit dashicons dashicons-edit" title="` + get_locale_message('__MSG_options_scriptslist_dataedit_btn_title__') + `"></span>        
+            <span data-lang="css" class="edit dashicons dashicons-edit" title="` + get_locale_message('__MSG_options_scriptslist_cssedit_btn_title__') + `"></span>
+            <span data-lang="js" class="edit dashicons dashicons-edit" title="` + get_locale_message('__MSG_options_scriptslist_jsedit_btn_title__') + `"></span>
+            <span class="delete dashicons dashicons-trash" title="` + get_locale_message('__MSG_options_scriptslist_scriptremove_btn_title__') + `"></span>
         </div>
     </td>`);
 
     return item;
-}
-
-function update_memory_state_block() {
-    get_memory_state().then(function(state) {
-        let block = $('#memory-use');
-
-        block.find('progress').attr({
-            value: state.use,
-            max: state.of
-        });
-    });
-}
-
-function set_night_mode() {
-    let hours = new Date().getHours();
-
-    /* between 8 and 18 hourses */
-    if ((hours >= 0 && hours <= 8) || (hours >= 18 && hours <= 23)) {
-        $('body').addClass('nigth-mode');
-    }
-}
-
-function show_alert({type = 'info', message = get_locale_message('__MSG_options_alert_defaultmessage__')} = {}) {
-    let alert = $('<div class="alert"></div>'),
-        hide = function() {
-            alert.fadeOut(300, function() {
-                $(this).remove();
-
-                update_positions();
-                
-                clearTimeout(timer_hide);
-            });
-        },
-        update_positions = function() {
-            let _bottom = 20;
-
-            $('.alert').each(function() {
-                $(this).dequeue().animate({
-                    bottom: _bottom
-                }, 300);
-
-                _bottom += $(this).outerHeight() + 20;
-            });            
-        },
-        timer_hide;
-    
-    alert.addClass(type);
-    alert.append('<div class="text">' + message + '</div>');
-    alert.append('<div class="close">&times;</div>');
-    alert.find('.close').click(hide);    
-    $('body').append(alert);
-
-    update_positions();
-
-    timer_hide = setTimeout(function() {
-        hide();
-    }, 10 * 1000);
 }
